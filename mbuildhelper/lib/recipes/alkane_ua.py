@@ -93,9 +93,9 @@ class AlkaneUA(mb.Compound):
                     to_positions=last_part["down"]
                 )
             if not cap_front:
-                self.add(self[0]["up"], "up", containment=False)
+                self.add(self["monomer[0]"]["up"], "up", containment=False)
             if not cap_end:
-                self.add(self[-1]["down"], "down", containment=False)
+                self.add(self[f"monomer[{n+int(cap_front)+int(cap_end)-1}]"]["down"], "down", containment=False)
 
             # end_groups = [None, None]
             # # adjust length of Polymer for absence of methyl terminations
