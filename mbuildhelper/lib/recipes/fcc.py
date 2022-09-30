@@ -5,6 +5,7 @@ class FCC(mb.Compound):
 
     def __init__(self, lattice_spacing=None, compound_to_add=None, x=1, y=1, z=1):
         super(FCC, self).__init__()
+        lattice_spacing = [lattice_spacing]*3
         lattice_points = {'A': [[0, 0, 0],
                                 [0, 0.5, 0.5],
                                 [0.5, 0.5, 0],
