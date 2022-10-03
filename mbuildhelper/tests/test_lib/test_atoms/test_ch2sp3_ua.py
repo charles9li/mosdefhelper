@@ -9,3 +9,7 @@ class TestCH2sp3UA(unittest.TestCase):
         m = CH2sp3UA()
         self.assertEqual(2, len(m.all_ports()))
         self.assertEqual(2, len(m.available_ports()))
+
+
+if __name__ == '__main__':
+    unittest.main()

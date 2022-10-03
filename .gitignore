@@ -160,7 +160,10 @@ cython_debug/
 .idea/
 *.iml
 
-# mol2 files
+# structure files
+*.pdb
+*.gro
+*.top
 *.mol2
 
 # old files

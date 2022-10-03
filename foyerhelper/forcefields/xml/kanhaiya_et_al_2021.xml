@@ -1,0 +1,31 @@
+<!-- This XML file is designed for use with Foyer in the Molecular Simulation and Design Framework (github.com/mosdef-hub). -->
+<!-- Reference: doi.org/10.1038/s41524-020-00478-1-->
+<ForceField name="FCC metals using LJ potentials" version="0.0.0" combining_rule="lorentz">
+    <!-- XML units: kJ/mol for energies, nm for lengths, and radians for angles. -->
+    <!-- For conversion from K to kJ/mol, we use: 1.38064852E-23*6.022140857E23/1000. -->
+    <AtomTypes>
+        <Type name="Ac_2021" class="Ac" element="Ac" mass="227" def="Ac" desc="FCC actinium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Ca_2021" class="Ca" element="Ca" mass="40.078" def="Ca" desc="FCC calcium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Ce_2021" class="Ce" element="Ce" mass="132.90545" def="Ce" desc="FCC cesium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Es_2021" class="Es" element="Es" mass="252" def="Es" desc="FCC einsteinium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Ir_2021" class="Ir" element="Ir" mass="192.217" def="Ir" desc="FCC iridium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Fe_2021" class="Fe" element="Fe" mass="55.845" def="Fe" desc="FCC/BCC iron" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Rh_2021" class="Rh" element="Rh" mass="102.0955" def="Rh" desc="FCC rhodium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Sr_2021" class="Sr" element="Sr" mass="87.62" def="Sr" desc="FCC strontium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Th_2021" class="Th" element="Th" mass="232.03806" def="Th" desc="FCC thorium" doi="10.1038/s41524-020-00478-1"/>
+        <Type name="Yb_2021" class="Yb" element="Yb" mass="173.04" def="Yb" desc="FCC ytterbium" doi="10.1038/s41524-020-00478-1"/>
+    </AtomTypes>
+    <NonbondedForce coulomb14scale="0.0" lj14scale="0.0">
+        <Atom type="Ac_2021" charge="0" sigma="0.34237237738133236" epsilon="27.23784"/>
+        <Atom type="Ca_2021" charge="0" sigma="0.35858673405148656" epsilon="14.05824"/>
+        <Atom type="Ce_2021" charge="0" sigma="0.3326615813536027" epsilon="26.69392"/>
+        <Atom type="Es_2021" charge="0" sigma="0.36820844020740223" epsilon="12.04992"/>
+        <Atom type="Ir_2021" charge="0" sigma="0.2481152930020845" epsilon="38.4928"/>
+        <Atom type="Fe_2021" charge="0" sigma="0.2307427679983479" epsilon="25.104"/>
+        <Atom type="Rh_2021" charge="0" sigma="0.24562077659129153" epsilon="32.80256"/>
+        <Atom type="Sr_2021" charge="0" sigma="0.3901245486736546" epsilon="14.2256"/>
+        <Atom type="Th_2021" charge="0" sigma="0.328117997891087" epsilon="35.43848"/>
+        <Atom type="Yb_2021" charge="0" sigma="0.35119227469092174" epsilon="11.33864"/>
+    </NonbondedForce>
+</ForceField>
+

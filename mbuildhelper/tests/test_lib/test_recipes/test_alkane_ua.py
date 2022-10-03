@@ -55,3 +55,7 @@ class TestAlkaneUA(unittest.TestCase):
         self.assertIsInstance(n12_no_cap["down"], mb.Port)
         self.assertEqual(n12_no_cap[0], n12_no_cap.all_ports()[0].anchor)
         self.assertEqual(n12_no_cap[-1], n12_no_cap.all_ports()[1].anchor)
+
+
+if __name__ == '__main__':
+    unittest.main()
