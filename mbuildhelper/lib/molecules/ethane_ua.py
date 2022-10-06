@@ -1,4 +1,6 @@
 """An ethane molecule for united-atom force fields."""
+__all__ = ['EthaneUA']
+
 import mbuild as mb
 from mbuildhelper.lib.atoms import CH3UA
 
@@ -9,8 +11,8 @@ class EthaneUA(mb.Compound):
     Connect two united-atom methyl groups to form an ethane.
     """
 
-    def __init__(self):
-        super(EthaneUA, self).__init__()
+    def __init__(self, **kwargs):
+        super(EthaneUA, self).__init__(**kwargs)
 
         self.add(CH3UA(), "methyl1")
         self.add(CH3UA(), "methyl2")
