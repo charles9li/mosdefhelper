@@ -1,3 +1,6 @@
+"""Iron surface"""
+__all__ = ['IronSurface']
+
 import mbuild as mb
 
 from mbuildhelper.lib.recipes import BCC, FCC
@@ -31,8 +34,8 @@ class IronSurface(mb.Compound):
         Dimensions of slab in nanometers in each direction.
     """
 
-    def __init__(self, crystal_structure=None, temperature=None, n_tiles=None, lengths=None):
-        super(IronSurface, self).__init__()
+    def __init__(self, crystal_structure=None, temperature=None, n_tiles=None, lengths=None, **kwargs):
+        super(IronSurface, self).__init__(**kwargs)
 
         # check that crystal structure is valid
         crystal_structure = crystal_structure.lower()
@@ -59,4 +62,4 @@ class IronSurface(mb.Compound):
 
 if __name__ == '__main__':
     surface = IronSurface(crystal_structure='fcc', temperature=313.15, lengths=[5, 5, 2])
-    print(surface)
+    surface.save('iron_surface.mol2')

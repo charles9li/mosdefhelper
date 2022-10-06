@@ -1,4 +1,6 @@
 """mBuild recipe for a generic united-atom alkane chain."""
+__all__ = ['AlkaneUA']
+
 import mbuild as mb
 from mbuildhelper.lib.atoms import CH2sp3UA, CH3UA
 from mbuildhelper.lib.molecules import MethaneUA, EthaneUA
@@ -7,10 +9,10 @@ from mbuildhelper.lib.molecules import MethaneUA, EthaneUA
 class AlkaneUA(mb.Compound):
     """A united-atom alkane which may optionally end with a Port."""
 
-    def __init__(self, n=3, cap_front=True, cap_end=True):
+    def __init__(self, n=3, cap_front=True, cap_end=True, **kwargs):
         if n < 1:
             raise ValueError("n must be 1 or more")
-        super(AlkaneUA, self).__init__()
+        super(AlkaneUA, self).__init__(**kwargs)
 
         # handle the case of methane and ethane separately
         if n < 3:
@@ -93,28 +95,11 @@ class AlkaneUA(mb.Compound):
                     to_positions=last_part["down"]
                 )
             if not cap_front:
+                # hoist port to alkane level
                 self.add(self["monomer[0]"]["up"], "up", containment=False)
             if not cap_end:
+                # hoist port to alkane level
                 self.add(self[f"monomer[{n+int(cap_front)+int(cap_end)-1}]"]["down"], "down", containment=False)
-
-            # end_groups = [None, None]
-            # # adjust length of Polymer for absence of methyl terminations
-            # if cap_front:
-            #     n -= 1
-            #     end_groups[0] = CH3UA()
-            # if cap_end:
-            #     n -= 1
-            #     end_groups[1] = CH3UA()
-
-            # chain = mb.recipes.Polymer(monomers=[CH2sp3UA()], end_groups=end_groups)
-            # chain.build(n, add_hydrogens=False)
-            # self.add(chain, "chain")
-            # if not cap_front:
-            #     # hoist port to alkane level
-            #     self.add(self["chain"]["up"], "up", containment=False)
-            # if not cap_end:
-            #     # hoist port to alkane level
-            #     self.add(self["chain"]["down"], "down", containment=False)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,6 @@
 """A dodecane molecule for united-atom force fields."""
+__all__ = ['DodecaneUA']
+
 from mbuildhelper.lib.recipes import AlkaneUA
 
 
@@ -8,8 +10,8 @@ class DodecaneUA(AlkaneUA):
     Uses the recipe for united-atom alkanes.
     """
 
-    def __init__(self):
-        super(DodecaneUA, self).__init__(n=12, cap_front=True, cap_end=True)
+    def __init__(self, **kwargs):
+        super(DodecaneUA, self).__init__(n=12, cap_front=True, cap_end=True, **kwargs)
 
 
 if __name__ == '__main__':
