@@ -29,4 +29,4 @@ class CH2sp3UA(mb.Compound):
 
 if __name__ == '__main__':
     m = CH2sp3UA()
-    m.save("ch2sp3_ua.mol2", overwrite=True)
+    m.save("ch2_sp3_ua.mol2", overwrite=True)
