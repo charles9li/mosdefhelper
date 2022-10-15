@@ -54,8 +54,8 @@ class AcrylateUA(mb.Compound):
             if cap_end:
                 if methyl:
                     second_carbon = CHsp3UA()
-                    second_carbon_port = second_carbon['left']
-                    methyl_port = second_carbon['down']
+                    second_carbon_port = second_carbon['down']
+                    methyl_port = second_carbon['left']
                 else:
                     second_carbon = CH2sp3UA()
                     second_carbon_port = second_carbon['down']
