@@ -1,0 +1,158 @@
+<ForceField name="Trappe-UA-acrylates" version="0.0.0" combining_rule="lorentz">
+    <AtomTypes>
+        <Type name="CH4" class="Csp3" element="_CH4" mass="16.04300" def="_CH4" desc="CH4, united atom" doi="10.1021/jp972543+"/>
+        <Type name="CH3_sp3" class="Csp3" element="_CH3" mass="15.03500" def="[_CH3;X1]*" desc="Alkane CH3, united atom" doi="10.1021/jp972543+"/>
+        <Type name="CH2_sp3" class="Csp3" element="_CH2" mass="14.02700" def="[_CH2;X2](*)*" desc="Alkane CH2, united atom" doi="10.1021/jp972543+"/>
+        <Type name="CH_sp3" class="Csp3" element="_CH" mass="13.01900" def="[_CH;X3](*)(*)*" desc="Alkane CH, united atom" doi="10.1021/jp984742e"/>
+        <Type name="C_sp3" class="Csp3" element="C" mass="12.01100" def="[C;X4](*)(*)(*)*" desc="Alkane carbon" doi="10.1021/jp984742e"/>
+        <Type name="CH2_sp2" class="Csp2" element="_CH2" mass="14.02700" def="[_CH2;X1][_CH2,_CH,C]" desc="Alkene CH2" doi="10.1021/jp001044x"/>
+        <Type name="CH_sp2" class="Csp2" element="_CH" mass="13.01900" def="[_CH;X2]([_CH2;X1])[C;X3]" desc="Alkene CH" doi="10.1021/jp810558v"/>
+        <Type name="C_sp2" class="Csp2" element="C" mass="12.01100" def="[C;X3]([_CH2;X1])(_CH3)[C;X3]" desc="Alkene carbon" doi="10.1021/jp810558v"/>
+        <Type name="C_carbonyl" class="C_carbonyl" element="C" mass="12.01100" def="[C;X3]([_CH2,_CH,C])(O)O" overrides="C_sp2" desc="Carbonyl carbon" doi="10.1021/jp810558v"/>
+        <Type name="O_carbonyl" class="O_carbonyl" element="O" mass="15.99948" def="[O;X1][C;X3]" desc="Carbonyl oxygen" doi="10.1021/jp810558v"/>
+        <Type name="O_ether" class="O_ether" element="O" mass="15.99948" def="[O;X2]([C;X3])[_CH3,_CH2]" desc="Ether oxygen" doi="10.1021/jp810558v"/>
+        <Type name="CH3_ether" class="Csp3" element="_CH3" mass="15.03500" def="[_CH3;X1]O" overrides="CH3_sp3" desc="CH3 bonded to ether oxygen" doi="10.1021/jp810558v"/>
+        <Type name="CH2_ether" class="Csp3" element="_CH2" mass="14.02700" def="[_CH2;X2]([O;X2])[_CH3,_CH2]" overrides="CH2_sp3" desc="CH2 bonded to ether oxygen" doi="10.1021/jp810558v"/>
+    </AtomTypes>
+    <HarmonicBondForce>
+        <!-- CHx-CHy -->
+        <!--    Martin and Siepmann, 1998, doi="10.1021/jp984742e" -->
+        <Bond class1="Csp3" class2="Csp3" length="0.1540" k="502416.0" />
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Bond class1="Csp3" class2="Csp2" length="0.1540" k="502416.0" />
+        <!-- CHx=CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Bond class1="Csp2" class2="Csp2" length="0.1330" k="502416.0" />
+        <!-- C(carbonyl)-CHx(sp2) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Bond class1="C_carbonyl" class2="Csp2" length="0.1520" k="502416.0" />
+        <!-- C(carbonyl)-CHx(sp3) -->
+        <!--    Extrapolated from the previous C(carbonyl)-CHx(sp2) bond from Maerzke et al.-->
+        <Bond class1="C_carbonyl" class2="Csp3" length="0.1520" k="502416.0" />
+        <!-- C(carbonyl)-O(carbonyl) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Bond class1="C_carbonyl" class2="O_carbonyl" length="0.1200" k="502416.0"/>
+        <!-- C(carbonyl)-O(ether) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Bond class1="C_carbonyl" class2="O_ether" length="0.1344" k="502416.0"/>
+        <!-- CHx-O(ether) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Bond class1="Csp3" class2="O_ether" length="0.1410" k="502416.0"/>
+    </HarmonicBondForce>
+    <HarmonicAngleForce>
+        <!-- CHx-[CH2]-CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Angle class1="Csp3" type2="CH2_sp3" class3="Csp3" angle="1.9896753472735356" k="519.653913625"/>
+        <!-- CHx-[CH]-CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Angle class1="Csp3" type2="CH_sp3" class3="Csp3" angle="1.9547687622336491" k="519.653913625"/>
+        <!-- CHx-[C]-CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Angle class1="Csp3" type2="C_sp3" class3="Csp3" angle="1.9106119321581925" k="519.653913625"/>
+        <!-- C-[CH(sp2)]=CH2(sp2) AND C-[C(sp2)]=CH2(sp2) AND CHx-[C(sp2)]-CHy -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Angle class1="C_carbonyl" class2="Csp2" class3="Csp2" angle="2.0891591146372126" k="585.504457560"/>
+        <Angle class1="C_carbonyl" class2="Csp2" class3="Csp3" angle="2.0891591146372126" k="585.504457560"/>
+        <Angle class1="Csp3" class2="Csp2" class3="Csp3" angle="2.0891591146372126" k="585.504457560"/>
+        <Angle class1="Csp3" class2="Csp2" class3="Csp2" angle="2.0891591146372126" k="585.504457560"/>
+        <!-- CHx-[O(ether)]-C(carbonyl) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Angle class1="Csp3" class2="O_ether" class3="C_carbonyl" angle="2.007128639793479" k="519.653913625"/>
+        <!-- O(ether)-[C(carbonyl)]=O(carbonyl) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Angle type1="O_ether" type2="C_carbonyl" type3="O_carbonyl" angle="2.1467549799530254" k="335.072843505"/>
+        <!-- O(ether)-[CHx]-CHy -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Angle class1="O_ether" class2="Csp3" class3="Csp3" angle="1.9373154697137058" k="293.500530415"/>
+        <!-- O(carbonyl)=[C(carbonyl)]-CHx -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Angle class1="O_carbonyl" class2="C_carbonyl" class3="Csp3" angle="2.199114857512855" k="519.653913625"/>
+        <Angle class1="O_carbonyl" class2="C_carbonyl" class3="Csp2" angle="2.199114857512855" k="519.653913625"/>
+        <!-- CHx-[CH2]-C(carbonyl) -->
+        <!--    Extrapolated from the CHx-[CH2]-CHy angle -->
+        <Angle class1="Csp3" type2="CH2_sp3" type3="C_carbonyl" angle="1.9896753472735356" k="519.653913625"/>
+        <!-- CHx-[CH]-C(carbonyl) -->
+        <!--    Extrapolated from the CHx-[CH]-CHy angle -->
+        <Angle class1="Csp3" type2="CH_sp3" type3="C_carbonyl" angle="1.9547687622336491" k="519.653913625"/>
+        <!-- CHx-[C]-C(carbonyl) -->
+        <!--    Extrapolated from the CHx-[C]-CHy angle -->
+        <Angle class1="Csp3" type2="C_sp3" type3="C_carbonyl" angle="1.9106119321581925" k="519.653913625"/>
+        <!-- O(ether)-[C(carbonyl)]-C(sp3) -->
+        <!--    Kamath et. al., 2006, doi="10.1016/j.fluid.2005.11.034" -->
+        <Angle class1="O_ether" class2="C_carbonyl" class3="Csp3" angle="1.9373154697137058" k="587.0010608308"/>
+    </HarmonicAngleForce>
+    <RBTorsionForce>
+        <!-- CHx-[CH2]-[CH2]-CHy -->
+        <!--    Martin and Siepmann, 1999, doi="10.1021/jp984742e" -->
+        <Proper class1="Csp3" type2="CH2_sp3" type3="CH2_sp3" class4="Csp3" c0="8.231068558" c1="16.95260727"	c2="1.133926412" c3="-26.31760224" c4="0" c5="0"/>
+        <Proper class1="Csp3" type2="CH2_sp3" type3="CH2_sp3" class4="C_carbonyl" c0="8.231068558" c1="16.95260727"	c2="1.133926412" c3="-26.31760224" c4="0" c5="0"/>
+        <!-- CHx-[CH2]-[CH]-CHy -->
+        <!--    Martin and Siepmann, 1999, doi="10.1021/jp984742e" -->
+        <Proper class1="Csp3" type2="CH2_sp3" type3="CH_sp3" class4="Csp3" c0="3.28620820513832" c1="7.4421092001194395" c2="1.8599452876465998" c3="-14.67569167777944" c4="0" c5="0"/>
+        <Proper class1="Csp3" type2="CH2_sp3" type3="CH_sp3" class4="C_carbonyl" c0="3.28620820513832" c1="7.4421092001194395" c2="1.8599452876465998" c3="-14.67569167777944" c4="0" c5="0"/>
+        <!-- CHx-[CH2]-[C]-CHy -->
+        <!--    Martin and Siepmann, 1999, doi="10.1021/jp984742e" -->
+        <Proper class1="Csp3" type2="CH2_sp3" type3="C_sp3" class4="Csp3" c0="3.83537846105722"	c1="11.5061353831717"	c2="0" c3="-15.3415138442289" c4="0" c5="0"/>
+        <Proper class1="Csp3" type2="CH2_sp3" type3="C_sp3" class4="C_carbonyl" c0="3.83537846105722"	c1="11.5061353831717"	c2="0" c3="-15.3415138442289" c4="0" c5="0"/>
+        <!-- CHX-[CH]-[CH]-CHY -->
+        <!--    Martin and Siepmann, 1999, doi="10.1021/jp984742e" -->
+        <Proper class1="Csp3" type2="CH_sp3" type3="CH_sp3" class4="Csp3" c0="3.28620820513832" c1="7.4421092001194395" c2="1.8599452876465998" c3="-14.67569167777944" c4="0" c5="0"/>
+        <!-- CHx-[O(ether)]-[C(carbonyl)]=O(carbonyl) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper class1="Csp3" class2="O_ether" class3="C_carbonyl" class4="O_carbonyl" c0="26.55539587" c1="2.717498962" c2="-22.8338424" c3="1.004054506"	c4="0" c5="0"/>
+        <!-- CHx-[O(ether)]-[C(carbonyl)]-C(sp2)-->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper class1="Csp3" class2="O_ether" class3="C_carbonyl" class4="Csp2" c0="26.55539587" c1="-2.717498962" c2="-22.8338424" c3="-1.004054506" c4="0" c5="0"/>
+        <!-- CH2=[CHx(sp2)]-[C(carbonyl)]=O(carbonyl) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="CH2_sp2" class2="Csp2" class3="C_carbonyl" class4="O_carbonyl" c0="13.27121265" c1="0.3487085622" c2="-12.85632097" c3="0.06618312244" c4="0" c5="0"/>
+        <!-- CH2=[CHx(sp2)]-[C(carbonyl)]-O(ether) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="CH2_sp2" class2="Csp2" class3="C(carbonyl)" class4="O_ether" c0="13.27121265" c1="-0.3487085622" c2="-12.85632097" c3="-0.06618312244" c4="0" c5="0"/>
+        <!-- O(carbonyl)=[C(carbonyl)]-[C(sp2)]-CH3 -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper class1="O_carbonyl" class2="C_carbonyl" class3="Csp2" type4="CH3_sp3" c0="0.4927150547" c1="1.842983784" c2="0.8410910384"	c3="-0.8021793534" c4="1.892371692" c5="0"/>
+        <!-- O(ether)-[C(carbonyl)]-[C(sp2)]-CH3 -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="O_ether" class2="C_carbonyl" class3="Csp2" type4="CH3_sp3" c0="0.4927150547" c1="-1.842983784" c2="0.8410910384"	c3="0.8021793534" c4="1.892371692" c5="0"/>
+        <!-- CHx-[CHy]-[O(ether)]-C(carbonyl) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper class1="Csp3" class2="Csp3" class3="O_ether" type4="C_carbonyl" c0="20.9330731" c1="5.699813559" c2="-5.551899269" c3="0.7349984954" c4="-3.410259987" c5="0"/>
+        <!-- CH2(sp2)=[CH(sp2)]-[CH(sp2)]=CH2(sp2) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="CH2_sp2" type2="CH_sp2" type3="CH_sp2" type4="CH2_sp2" c0="28.85376277" c1="7.055237255" c2="-33.67141184" c3="-15.29994153" c4="13.06235335" c5="0"/>
+        <!-- CH2(sp2)=[CH(sp2)]-[C(sp2)]-CH3 -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="CH2_sp2" type2="CH_sp2" type3="C_sp2" type4="CH3_sp3" c0="25.17527822" c1="-11.5780219" c2="-25.28228535" c3="19.30751251" c4="7.843531455" c5="0"/>
+        <!-- O(ether)-[CH2]-[CH2]-O(ether) -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="O_ether" type2="CH2_ether" type3="CH2_ether" type4="O_ether" c0="8.368257191" c1="25.10477157" c2="4.184170168" c3="-33.47302876" c4="0" c5="0"/>
+        <!-- O(ether)-[CH2]-[CH2]-CHx -->
+        <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
+        <Proper type1="O_ether" type2="CH2_ether" type3="CH2_sp3" class4="Csp3" c0="6.983067719" c1="17.73616222" c2="0.8869868721" c3="-25.60621681" c4="0" c5="0"/>
+        <!-- CHx-[CHy]-[C(carbonyl)]=O(carbonyl) -->
+        <!--    Stubbs et. al., 2004, doi="10.1021/jp049459w" -->
+        <Proper class1="Csp3" class2="Csp3" class3="C_carbonyl" class4="O_carbonyl" c0="9.321593474918338" c1="-1.1872221172242206" c2="-0.9618170356502401" c3="9.75219949390456" c4="0" c5="0"/>
+        <!-- CHx-[CHy]-[C(carbonyl)]-O(ether) -->
+        <!--    Extrapolated from previous torsion where c1 and c3 terms are reciprocals. -->
+        <Proper class1="Csp3" class2="Csp3" class3="C_carbonyl" class4="O_ether" c0="9.321593474918338" c1="1.1872221172242206" c2="-0.9618170356502401" c3="-9.75219949390456" c4="0" c5="0"/>
+        <!-- CHx-[O(ether)]-[C(carbonyl)]-C(sp3) -->
+        <!--    Extrapolated from CHx-[O(ether)]-[C(carbonyl)]-C(sp2) torsion -->
+        <Proper class1="Csp3" class2="O_ether" class3="C_carbonyl" class4="Csp3" c0="26.55539587" c1="-2.717498962" c2="-22.8338424" c3="-1.004054506" c4="0" c5="0"/>
+    </RBTorsionForce>
+    <NonbondedForce coulomb14scale="0" lj14scale="0">
+        <Atom type="CH4" charge="0.0" sigma="0.373" epsilon="1.23054"/>
+        <Atom type="CH3_sp3" charge="0.0" sigma="0.375" epsilon="0.814817336564"/>
+        <Atom type="CH2_sp3" charge="0.0" sigma="0.395" epsilon="0.382465280428"/>
+        <Atom type="CH_sp3" charge="0.0" sigma="0.468" epsilon="0.08314462618"/>
+        <Atom type="C_sp3" charge="0.0" sigma="0.64" epsilon="0.004157231309"/>
+        <Atom type="CH2_sp2" charge="0.0" sigma="0.3675" epsilon="0.706729322530"/>
+        <Atom type="CH_sp2" charge="0.0" sigma="0.373" epsilon="0.432352056130"/>
+        <Atom type="C_sp2" charge="0.0" sigma="0.385" epsilon="0.182918177596"/>
+        <Atom type="C_carbonyl" charge="0.400" sigma="0.382" epsilon="0.332578504720"/>
+        <Atom type="O_carbonyl" charge="-0.400" sigma="0.371" epsilon="0.656842546820"/>
+        <Atom type="O_ether" charge="-0.250" sigma="0.28" epsilon="0.457295443990"/>
+        <Atom type="CH3_ether" charge="0.250" sigma="0.375" epsilon="0.814817336564"/>
+        <Atom type="CH2_ether" charge="0.250" sigma="0.395" epsilon="0.382465280428"/>
+    </NonbondedForce>
+</ForceField>

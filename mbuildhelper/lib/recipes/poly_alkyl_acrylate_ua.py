@@ -110,7 +110,6 @@ class PolyAlkylAcrylateUA(mb.Compound):
             for m in monomer_sequence:
                 this_part = _token_to_monomer(m)
                 self.add(this_part, label="monomer[$]")
-                print(this_part.available_ports())
                 mb.force_overlap(
                     move_this=this_part,
                     from_positions=this_part.labels['up'],
