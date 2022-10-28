@@ -20,3 +20,7 @@ class TestTraPPEUAAcrylates(unittest.TestCase):
         plma_5mer = PolyAlkylAcrylateUA("5*mA12")
         forcefield = foyerhelper.ForceField(forcefield_files="trappe-ua-acrylates.xml")
         plma_5mer = forcefield.apply(plma_5mer)
+
+
+if __name__ == '__main__':
+    unittest.main()
