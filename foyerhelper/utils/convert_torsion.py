@@ -47,7 +47,7 @@ Ryckaert-Bellemans torsion form uses psi. Note that the power and
 Ryckaert-Bellemans torsion are almost the same except for the angle convention
 used - to convert between the two, simply multiply each coefficient by (-1)^n.
 """
-__all__ = ['convert_torsion']
+__all__ = ['convert_units', 'convert_torsion']
 
 import numpy as np
 from scipy.constants import R
@@ -259,7 +259,7 @@ def convert_units(x, input_units, output_units):
     input_units = input_units.lower()
     output_units = output_units.lower()
 
-    # check that input_units and output_unist are proper
+    # check that input_units and output_units are proper
     if input_units not in UNITS:
         raise ValueError(f"{input_units} is not a valid torsion form")
     if output_units not in UNITS:
@@ -267,7 +267,7 @@ def convert_units(x, input_units, output_units):
 
     # try to find if series of conversions exists between input units and output units
     try:
-        conversion_path = nx.shortest_path(TORSION_FORM_GRAPH, source=input_units, target=output_units)
+        conversion_path = nx.shortest_path(UNITS_GRAPH, source=input_units, target=output_units)
     except nx.exception.NetworkXNoPath:
         raise ValueError(f"no conversion method from {UNIT_TO_FULL_NAME[input_units]} torsion "
                          f"to {UNIT_TO_FULL_NAME[output_units]} torsion exists")
