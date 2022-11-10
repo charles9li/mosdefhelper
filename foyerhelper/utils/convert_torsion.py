@@ -50,6 +50,7 @@ used - to convert between the two, simply multiply each coefficient by (-1)^n.
 __all__ = ['convert_torsion']
 
 import numpy as np
+from scipy.constants import R
 import networkx as nx
 
 
@@ -72,13 +73,26 @@ for tf in TORSION_FORMS:
     TORSION_FORM_GRAPH.add_node(tf)
 
 
-# Create functions that return conversion matrices for a specified
-# transformation and add them to the edges of the graph
-# ================================================================
+# Conversion matrices
+# =============================================================================
+#   Each function in this section takes in the number of basis functions used
+#   and returns a conversion matrix. The functions are added to the appropriate
+#   edge in the torsion form graph.
 
 
-def _opls_to_cosine(n_bases, inv=False):
-    """Returns conversion matrix for OPLS to cosine torsion."""
+def _opls_to_cosine(n_bases):
+    """Returns conversion matrix for OPLS to cosine torsion.
+
+    Parameters
+    ----------
+    n_bases : int
+        Number of basis functions used.
+
+    Returns
+    -------
+    matrix : np.ndarray, shape (n_bases, n_bases)
+        Transformation matrix.
+    """
     # initialize transformation matrix
     matrix = np.zeros((n_bases, n_bases))
 
@@ -88,18 +102,50 @@ def _opls_to_cosine(n_bases, inv=False):
         if i > 0:
             matrix[i, i] = (-1)**(i+1)
 
-    if not inv:
-        return matrix
-    else:
-        return np.linalg.inv(matrix)
+    return matrix
+
+
+def _cosine_to_opls(n_bases):
+    """Returns conversion matrix for cosine to OPLS torsion.
+
+    Parameters
+    ----------
+    n_bases : int
+        Number of basis functions used.
+
+    Returns
+    -------
+    matrix : np.ndarray, shape (n_bases, n_bases)
+        Transformation matrix.
+    """
+    return np.linalg.inv(_opls_to_cosine(n_bases))
 
 
 TORSION_FORM_GRAPH.add_edge('opls', 'cosine', function=_opls_to_cosine)
-TORSION_FORM_GRAPH.add_edge('cosine', 'opls', function=lambda n_bases: _opls_to_cosine(n_bases, inv=True))
+TORSION_FORM_GRAPH.add_edge('cosine', 'opls', function=_cosine_to_opls)
 
 
 def _cosine_to_power(n_bases, inv=False):
-    """Returns conversion matrix for cosine to power torsion."""
+    """Returns conversion matrix for cosine to power torsion.
+
+    Coefficients of Chebyshev polynomials of the first kind are used to
+    construct the transformation matrix due to the polynomials having the
+    following property:
+
+        T_n(cos(x)) = cos(n * x)
+
+    This allows for mappings between cosine series into a power series.
+
+    Parameters
+    ----------
+    n_bases : int
+        Number of basis functions used.
+
+    Returns
+    -------
+    matrix : np.ndarray, shape (n_bases, n_bases)
+        Transformation matrix.
+    """
     # initialize transformation matrix
     matrix = np.zeros((n_bases, n_bases))
 
@@ -114,14 +160,40 @@ def _cosine_to_power(n_bases, inv=False):
         return np.linalg.inv(matrix)
 
 
+def _power_to_cosine(n_bases):
+    """Returns conversion matrix for cosine to power torsion.
+
+    Parameters
+    ----------
+    n_bases : int
+        Number of basis functions used.
+
+    Returns
+    -------
+    matrix : np.ndarray, shape (n_bases, n_bases)
+        Transformation matrix.
+    """
+    return np.linalg.inv(_cosine_to_opls(n_bases))
+
+
 TORSION_FORM_GRAPH.add_edge('cosine', 'power', function=_cosine_to_power)
-TORSION_FORM_GRAPH.add_edge('power', 'cosine', function=lambda n_bases: _cosine_to_power(n_bases, inv=True))
+TORSION_FORM_GRAPH.add_edge('power', 'cosine', function=_power_to_cosine)
 
 
 def _power_to_rb(n_bases):
     """Returns conversion matrix for power to Ryckaert-Bellemans torsion.
 
     Note that the reverse conversion uses the exact same matrix.
+
+    Parameters
+    ----------
+    n_bases : int
+        Number of basis functions used.
+
+    Returns
+    -------
+    matrix : np.ndarray, shape (n_bases, n_bases)
+        Transformation matrix.
     """
     matrix = np.identity(n_bases)
     matrix[1::2, 1::2] *= -1
@@ -132,20 +204,96 @@ TORSION_FORM_GRAPH.add_edge('power', 'rb', function=_power_to_rb)
 TORSION_FORM_GRAPH.add_edge('rb', 'power', function=_power_to_rb)
 
 
+# Unit conversions
+# =============================================================================
+#   The unit conversion functions similarly to the torsion conversion, where a
+#   units make up the nodes of a graph and edges contain functions that convert
+#   between units. The supported units are
+#    - kJ/mol
+#    - kcal/mol
+#    - kB
+#   The kB units refer to when reported coefficients are normalized by kB,
+#   i.e. cn/kB, which have units of kelvin.
+
+# supported units
+UNITS = ['kj/mol', 'kcal/mol', 'kb']
+# stylized names used for error checking
+UNIT_TO_FULL_NAME = {'kj/mol': 'kJ/mol',
+                     'kcal/mol': 'kcal/mol',
+                     'kb': 'kB'}
+
+# create graph of units and add nodes and conversion functions
+UNITS_GRAPH = nx.DiGraph()
+for u in UNITS:
+    UNITS_GRAPH.add_node(u)
+UNITS_GRAPH.add_edge('kj/mol', 'kcal/mol', function=lambda x: x / 4.184)
+UNITS_GRAPH.add_edge('kcal/mol', 'kj/mol', function=lambda x: x * 4.184)
+UNITS_GRAPH.add_edge('kb', 'kj/mol', function=lambda x: x * R / 1000)
+UNITS_GRAPH.add_edge('kj/mol', 'kb', function=lambda x: x / R * 1000)
+
+
+def convert_units(x, input_units, output_units):
+    """Performs unit conversions on a provided quantity.
+
+    Parameters
+    ----------
+    x : int or float or array_like
+        Quantity that will be scaled for a unit conversion.
+    input_units, output_units : str
+        Current and desired units of `x`, respectively. One of the following
+        string values.
+
+        'kj/mol'
+            kJ/mol
+        'kcal/mol'
+            kcal/mol
+        'kb'
+            kB units
+
+    Returns
+    -------
+    x : int or float or array_like
+        Quantity with units specified using `output_units`.
+    """
+    # set to lowercase
+    input_units = input_units.lower()
+    output_units = output_units.lower()
+
+    # check that input_units and output_unist are proper
+    if input_units not in UNITS:
+        raise ValueError(f"{input_units} is not a valid torsion form")
+    if output_units not in UNITS:
+        raise ValueError(f"{output_units} is not a valid torsion form")
+
+    # try to find if series of conversions exists between input units and output units
+    try:
+        conversion_path = nx.shortest_path(TORSION_FORM_GRAPH, source=input_units, target=output_units)
+    except nx.exception.NetworkXNoPath:
+        raise ValueError(f"no conversion method from {UNIT_TO_FULL_NAME[input_units]} torsion "
+                         f"to {UNIT_TO_FULL_NAME[output_units]} torsion exists")
+
+    # carry out conversion strategy by traversing conversion path
+    for prev_form, curr_form in zip(conversion_path[:-1], conversion_path[1:]):
+        x = UNITS_GRAPH[prev_form][curr_form]['function'](x)
+
+    return x
+
+
 # Main conversion function
 # ========================
 
 
-def convert_torsion(coefficients, from_form, to_form):
+def convert_torsion(coefficients, input_form, output_form, input_units=None, output_units=None):
     """Takes coefficients for a specified torsion and applies conversion(s) to
     transform them into coefficients for another torsion form.
 
     Parameters
     ----------
     coefficients : array_like, shape (N,)
-        Coefficients corresponding to the torsion form specified by from_form.
-    from_form : str
-        One of the following string values.
+        Coefficients corresponding to the torsion form specified by `input_form`.
+    input_form, output_form : str
+        Torsion form of the input and output coefficients, respectively. One of
+        the following string values.
 
         'opls'
             OPLS torsion form
@@ -155,13 +303,21 @@ def convert_torsion(coefficients, from_form, to_form):
             power torsion form, consists of linear combination of cosine powers
         'rb'
             Ryckaert-Bellemans torsion form
-    to_form : str
-        Same string values as from_form.
+    input_units, output_units : bool, optional
+        Current and desired units of `x`, respectively. One of the following
+        string values.
+
+        'kj/mol'
+            kJ/mol
+        'kcal/mol'
+            kcal/mol
+        'kb'
+            kB units
 
     Returns
     -------
     converted_coefficients : array_like, shape (N,)
-        Coefficients corresponding to the torsion form specified by to_form.
+        Coefficients corresponding to the torsion form specified by `input_form`.
 
     Raises
     ------
@@ -170,28 +326,32 @@ def convert_torsion(coefficients, from_form, to_form):
         strategy can't be found for from_form to to_form.
     """
     # set to lowercase
-    from_form = from_form.lower()
-    to_form = to_form.lower()
+    input_form = input_form.lower()
+    output_form = output_form.lower()
 
-    # check that from_form and to_form are proper
-    if from_form not in TORSION_FORMS:
-        raise ValueError(f"{from_form} is not a valid torsion form")
-    if to_form not in TORSION_FORMS:
-        raise ValueError(f"{to_form} is not a valid torsion form")
+    # check that input_form and output_form are proper
+    if input_form not in TORSION_FORMS:
+        raise ValueError(f"{input_form} is not a valid torsion form")
+    if output_form not in TORSION_FORMS:
+        raise ValueError(f"{output_form} is not a valid torsion form")
 
     # determine number of basis functions used
     n_bases = len(coefficients)
 
-    # try to find if series of conversions exists between from_form and to_form
+    # try to find if series of conversions exists between input_form and output_form
     try:
-        conversion_path = nx.shortest_path(TORSION_FORM_GRAPH, source=from_form, target=to_form)
+        conversion_path = nx.shortest_path(TORSION_FORM_GRAPH, source=input_form, target=output_form)
     except nx.exception.NetworkXNoPath:
-        raise ValueError(f"no conversion method from {TORSION_FORM_TO_FULL_NAME[from_form]} torsion "
-                         f"to {TORSION_FORM_TO_FULL_NAME[to_form]} torsion exists")
+        raise ValueError(f"no conversion method from {TORSION_FORM_TO_FULL_NAME[input_form]} torsion "
+                         f"to {TORSION_FORM_TO_FULL_NAME[output_form]} torsion exists")
 
     # carry out conversion strategy by traversing conversion path
     for prev_form, curr_form in zip(conversion_path[:-1], conversion_path[1:]):
         matrix = TORSION_FORM_GRAPH[prev_form][curr_form]['function'](n_bases)
         coefficients = np.dot(matrix, coefficients)
+
+    # do unit conversion if specified
+    if input_units is not None or output_units is not None:
+        coefficients = convert_units(coefficients, input_units, output_units)
 
     return coefficients
