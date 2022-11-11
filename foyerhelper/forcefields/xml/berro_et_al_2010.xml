@@ -1,0 +1,19 @@
+<!-- This XML file is designed for use with Foyer in the Molecular Simulation and Design Framework (github.com/mosdef-hub). -->
+<!-- Reference: doi.org/10.1016/j.triboint.2010.02.011 -->
+<ForceField name="Iron oxide using LJ potentials" version="0.0.0" combining_rule="lorentz">
+    <!-- XML units: kJ/mol for energies, nm for lengths, and radians for angles. -->
+    <!-- For conversion from K to kJ/mol, we use: 1.38064852E-23*6.022140857E23/1000. -->
+    <AtomTypes>
+        <Type name="Fe_hematite" class="Fe" element="Fe" mass="55.845" def="Fe" desc="Fe in hematite" doi="10.1016/j.triboint.2010.02.011"/>
+        <Type name="O_hematite" class="O" element="O" mass="15.999" def="O" desc="O in hematite" doi="10.1016/j.triboint.2010.02.011"/>
+    </AtomTypes>
+    <HarmonicBondForce>
+        <Bond class1="Fe" class2="Fe" length="0" k="54392"/>
+        <Bond class1="Fe" class2="O" length="0" k="54392"/>
+        <Bond class1="O" class2="O" length="0" k="54392"/>
+    </HarmonicBondForce>
+    <NonbondedForce coulomb14scale="0.0" lj14scale="0.0">
+        <Atom type="Fe_hematite" charge="0.771" sigma="0.220" epsilon="1.777154"/>
+        <Atom type="O_hematite" charge="-0.514" sigma="0.296" epsilon="0.7108616"/>
+    </NonbondedForce>
+</ForceField>

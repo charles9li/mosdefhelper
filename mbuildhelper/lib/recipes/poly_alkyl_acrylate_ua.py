@@ -3,9 +3,8 @@ from ast import literal_eval
 import string
 
 import mbuild as mb
-from mbuild.lib.recipes import Polymer
 
-from mbuildhelper.lib.molecules import AlkylAcrylateUA
+import mbuildhelper.lib.molecules as mbh_lib_molecules
 
 
 _OPERATOR_PRECEDENCE = {'+': 2,
@@ -81,7 +80,7 @@ def _token_to_monomer(monomer_token, cap_front=False, cap_end=False):
         methyl = True
     else:
         raise ValueError(f"invalid monomer token: {monomer_token}")
-    return AlkylAcrylateUA(n=alkyl_tail_length, methyl=methyl, cap_front=cap_front, cap_end=cap_end)
+    return mbh_lib_molecules.AlkylAcrylateUA(n=alkyl_tail_length, methyl=methyl, cap_front=cap_front, cap_end=cap_end)
 
 
 _CHARACTERS = string.ascii_letters

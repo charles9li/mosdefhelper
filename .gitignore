@@ -167,6 +167,7 @@ cython_debug/
 *.mol2
 *.inpcrd
 *.prmtop
+*.dcd
 
 # old files
 runomm
