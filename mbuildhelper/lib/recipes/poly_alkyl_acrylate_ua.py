@@ -80,7 +80,10 @@ def _token_to_monomer(monomer_token, cap_front=False, cap_end=False):
         methyl = True
     else:
         raise ValueError(f"invalid monomer token: {monomer_token}")
-    return mbh_lib_molecules.AlkylAcrylateUA(n=alkyl_tail_length, methyl=methyl, cap_front=cap_front, cap_end=cap_end)
+    monomer = mbh_lib_molecules.AlkylAcrylateUA(n=alkyl_tail_length, methyl=methyl,
+                                                cap_front=cap_front, cap_end=cap_end)
+    monomer.name = monomer_token
+    return monomer
 
 
 _CHARACTERS = string.ascii_letters

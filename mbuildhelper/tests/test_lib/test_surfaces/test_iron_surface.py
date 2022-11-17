@@ -28,7 +28,7 @@ class TestIronSurface(unittest.TestCase):
         print("dodecane_box_filled")
 
         # apply force fields
-        iron_forcefield = foyerhelper.ForceField(forcefield_files="kanhaiya_et_al_2021.xml")
+        iron_forcefield = foyerhelper.Forcefield(name="fcc-metals")
         iron_surface = iron_forcefield.apply(iron_surface)
         trappeua = foyer.Forcefield(name='trappe-ua')
         dodecane_box = trappeua.apply(dodecane_box)

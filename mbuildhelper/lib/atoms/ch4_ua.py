@@ -9,7 +9,7 @@ class CH4UA(mb.Compound):
 
     def __init__(self, **kwargs):
         super(CH4UA, self).__init__(**kwargs)
-        self.add(mb.Particle(name='_CH4', pos=[0, 0, 0], mass=16.043))
+        self.add(mb.Particle(name='_CH4', pos=[0, 0, 0], mass=16.043, charge=0.0))
 
 
 if __name__ == '__main__':

@@ -28,12 +28,12 @@ class TestHematite0001Surface(unittest.TestCase):
             dodecane_box.xyz += np.array([0, 0, hematite_surface.box.Lz])   # shift dodecane above surface
 
         # apply force fields
-        hematite_forcefield = foyerhelper.ForceField(forcefield_files="berro_et_al_2010.xml")
+        hematite_forcefield = foyerhelper.Forcefield(forcefield_files="iron-oxide.xml")
         hematite_surface = hematite_forcefield.apply(hematite_surface,
                                                      assert_angle_params=False,
                                                      assert_dihedral_params=False,
                                                      set_masses_to_zero=True)
-        trappeua = foyerhelper.ForceField(forcefield_files="trappe-ua-acrylates.xml")
+        trappeua = foyerhelper.Forcefield(forcefield_files="trappe-ua-acrylates.xml")
         dodecane_box = trappeua.apply(dodecane_box)
 
         # add boxes
@@ -58,12 +58,12 @@ class TestHematite0001Surface(unittest.TestCase):
         # apply force fields
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            hematite_forcefield = foyerhelper.ForceField(forcefield_files="berro_et_al_2010.xml")
+            hematite_forcefield = foyerhelper.Forcefield(forcefield_files="iron-oxide.xml")
             hematite_surface = hematite_forcefield.apply(hematite_surface,
                                                          assert_angle_params=False,
                                                          assert_dihedral_params=False,
                                                          set_masses_to_zero=True)
-            trappeua = foyerhelper.ForceField(forcefield_files="trappe-ua-acrylates.xml")
+            trappeua = foyerhelper.Forcefield(forcefield_files="trappe-ua-acrylates.xml")
             butyl_acrylate = trappeua.apply(butyl_acrylate)
 
         # add boxes

@@ -11,7 +11,7 @@ class CHsp2UA(mb.Compound):
 
     def __init__(self, **kwargs):
         super(CHsp2UA, self).__init__(**kwargs)
-        self.add(mb.Particle(name="_CH", pos=[0, 0, 0], mass=13.019))
+        self.add(mb.Particle(name="_CH", pos=[0, 0, 0], mass=13.019, charge=0.0))
 
         self.add(mb.Port(anchor=self[0]), "up")
         self["up"].translate(np.array([0, 0.133/2, 0]))

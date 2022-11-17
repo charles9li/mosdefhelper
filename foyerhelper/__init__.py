@@ -1,1 +1,1 @@
-from foyerhelper.forcefield import ForceField
+from foyerhelper.forcefield import Forcefield, ForceField

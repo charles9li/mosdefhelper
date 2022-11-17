@@ -14,7 +14,7 @@ class Osp2(mb.Compound):
 
     def __init__(self, **kwargs):
         super(Osp2, self).__init__(**kwargs)
-        self.add(mb.Particle(name="O", pos=[0, 0, 0], element="O"))
+        self.add(mb.Particle(name="O", pos=[0, 0, 0], charge=0.0, element="O"))
 
         # add ports
         self.add(mb.Port(anchor=self[0]), "up")
