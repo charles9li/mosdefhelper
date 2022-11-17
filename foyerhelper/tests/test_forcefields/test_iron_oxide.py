@@ -9,11 +9,11 @@ from mbuildhelper.lib.surfaces import Hematite0001Surface
 import foyerhelper
 
 
-class TestBerroEtAl2010(unittest.TestCase):
+class TestIronOxide(unittest.TestCase):
 
     def test_hematite(self):
         hematite: mb.Compound = Hematite0001Surface(lengths=[2, 2, 1])
-        forcefield = foyerhelper.ForceField("berro_et_al_2010.xml")
+        forcefield = foyerhelper.Forcefield(name="iron-oxide")
         hematite: pmd.Structure = forcefield.apply(hematite,
                                                    assert_angle_params=False,
                                                    assert_dihedral_params=False,

@@ -14,7 +14,7 @@ class Osp3(mb.Compound):
 
     def __init__(self, **kwargs):
         super(Osp3, self).__init__(**kwargs)
-        self.add(mb.Particle(name="O", pos=[0, 0, 0], element="O"))
+        self.add(mb.Particle(name="O", pos=[0, 0, 0], charge=0.0, element="O"))
 
         # angle to rotate ports
         theta = 0.5 * (180 - 115.0) * np.pi / 180

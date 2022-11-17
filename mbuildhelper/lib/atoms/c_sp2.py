@@ -14,7 +14,7 @@ class Csp2(mb.Compound):
     
     def __init__(self, **kwargs):
         super(Csp2, self).__init__(**kwargs)
-        self.add(mb.Particle(name="C", pos=[0, 0, 0], element="C"))
+        self.add(mb.Particle(name="C", pos=[0, 0, 0], charge=0.0, element="C"))
 
         self.add(mb.Port(anchor=self[0]), "up")
         self["up"].translate(np.array([0, 0.133/2, 0]))

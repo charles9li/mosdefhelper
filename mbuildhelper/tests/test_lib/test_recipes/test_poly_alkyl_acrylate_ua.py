@@ -20,7 +20,7 @@ class TestPolyAlkylAcrylateUA(unittest.TestCase):
         pba_10mer_ua = PolyAlkylAcrylateUA("10*A4")
         box = mb.Box(lengths=[4, 4, 4])
         system = mb.fill_box(pba_10mer_ua, n_compounds=1, box=box)
-        trappeua = foyerhelper.ForceField(forcefield_files="trappe-ua-acrylates.xml")
+        trappeua = foyerhelper.Forcefield(name="trappe-ua-acrylates")
         system = trappeua.apply(system)
         system.save("pba_10mer.gro", overwrite=True)
         system.save("pba_10mer.top", overwrite=True)

@@ -11,7 +11,7 @@ class CHsp3UA(mb.Compound):
 
     def __init__(self, **kwargs):
         super(CHsp3UA, self).__init__(**kwargs)
-        self.add(mb.Particle(name='_CH', pos=[0, 0, 0], mass=13.019))
+        self.add(mb.Particle(name='_CH', pos=[0, 0, 0], mass=13.019, charge=0.0))
 
         # angle to rotate ports
         theta = 0.5 * (180 - 109.5) * np.pi / 180

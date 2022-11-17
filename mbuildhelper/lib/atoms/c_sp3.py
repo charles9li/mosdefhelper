@@ -11,7 +11,7 @@ class Csp3(mb.Compound):
 
     def __init__(self, **kwargs):
         super(Csp3, self).__init__(**kwargs)
-        self.add(mb.Particle(name='C', pos=[0, 0, 0], element='C'))
+        self.add(mb.Particle(name='C', pos=[0, 0, 0], charge=0.0, element='C'))
 
         # angle to rotate ports
         theta = 0.5 * (180 - 109.5) * np.pi / 180

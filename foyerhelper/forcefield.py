@@ -1,4 +1,5 @@
 """ForceField class that extends from foyer's ForceField class."""
+import glob
 import os
 import warnings
 from pkg_resources import resource_filename
@@ -6,25 +7,60 @@ from pkg_resources import resource_filename
 import foyer
 
 
-class ForceField(foyer.Forcefield):
+class Forcefield(foyer.Forcefield):
     """Extension of Foyer's ForceField class that provides a number of
     additional automatically-supported force fields.
     """
 
     def __init__(self, forcefield_files=None, name=None, validation=True, debug=False):
+        # first try to use the original foyer Forcefield class
         try:
-            super(ForceField, self).__init__(forcefield_files=forcefield_files, name=name, validation=validation, debug=debug)
-        except (FileNotFoundError, OSError) as err:
-            ff_filepath = resource_filename("foyerhelper", "forcefields")
+            super(Forcefield, self).__init__(forcefield_files=forcefield_files,
+                                             name=name,
+                                             validation=validation,
+                                             debug=debug)
+
+        # if original foyer Forcefield class doesn't work, try to search for
+        # additional force field files in foyerhelper
+        except (FileNotFoundError, OSError):
+            all_files_to_load = []
             if forcefield_files is not None:
-                if isinstance(forcefield_files, str):
-                    forcefield_files = [forcefield_files]
-                forcefield_files = [os.path.join(ff_filepath, "xml", fff) for fff in forcefield_files]
-                super(ForceField, self).__init__(forcefield_files=forcefield_files)
-            elif name is not None:
-                super(ForceField, self).__init__(forcefield_files=os.path.join(ff_filepath, "xml", name))
-            else:
-                raise err
+                if isinstance(forcefield_files, (list, tuple, set)):
+                    for file in forcefield_files:
+                        all_files_to_load.append(file)
+                else:
+                    all_files_to_load.append(forcefield_files)
+
+            if name is not None:
+                try:
+                    file = self.included_forcefields[name]
+                except KeyError:
+                    raise IOError(f"Forcefield {name} cannot be found")
+                else:
+                    all_files_to_load.append(file)
+
+            super(Forcefield, self).__init__(forcefield_files=all_files_to_load,
+                                             validation=validation,
+                                             debug=debug)
+
+    @property
+    def included_forcefields(self):
+        """Overrides parent property to include additional force fields in
+        foyerhelper.
+        """
+        if len(self._included_forcefields) > 2:
+            return self._included_forcefields
+
+        self._included_forcefields = super(Forcefield, self).included_forcefields
+
+        ff_dir = resource_filename("foyerhelper", "forcefields")
+        ff_filepaths = set(glob.glob(os.path.join(ff_dir, "xml/*.xml")))
+
+        for ff_filepath in ff_filepaths:
+            _, ff_file = os.path.split(ff_filepath)
+            basename, _ = os.path.splitext(ff_file)
+            self._included_forcefields[basename] = ff_filepath
+        return self._included_forcefields
 
     def apply(
         self,
@@ -47,7 +83,7 @@ class ForceField(foyer.Forcefield):
         with warnings.catch_warnings():
             if not verbose:
                 warnings.simplefilter("ignore")
-            structure = super(ForceField, self).apply(structure,
+            structure = super(Forcefield, self).apply(structure,
                                                       references_file=references_file,
                                                       use_residue_map=use_residue_map,
                                                       assert_bond_params=assert_bond_params,
@@ -64,3 +100,7 @@ class ForceField(foyer.Forcefield):
                 atom.mass = 0.0
 
         return structure
+
+
+# different spelling
+ForceField = Forcefield

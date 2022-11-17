@@ -1,9 +1,18 @@
 <!-- This XML file is designed for use with Foyer in the Molecular Simulation and Design Framework (github.com/mosdef-hub). -->
-<!-- Reference: doi.org/10.1038/s41524-020-00478-1-->
+<!-- Reference: doi.org/10.1021/jp801931d -->
+<!-- Reference: doi.org/10.1038/s41524-020-00478-1 -->
 <ForceField name="FCC metals using LJ potentials" version="0.0.0" combining_rule="lorentz">
     <!-- XML units: kJ/mol for energies, nm for lengths, and radians for angles. -->
     <!-- For conversion from K to kJ/mol, we use: 1.38064852E-23*6.022140857E23/1000. -->
     <AtomTypes>
+        <Type name="Ag_2008" class="Ag" element="Ag" mass="107.86822" def="Ag" desc="FCC silver" doi="10.1021/jp801931d"/>
+        <Type name="Al_2008" class="Al" element="Al" mass="26.98153868" def="Al" desc="FCC aluminum" doi="10.1021/jp801931d"/>
+        <Type name="Au_2008" class="Au" element="Au" mass="196.9665694" def="Au" desc="FCC gold" doi="10.1021/jp801931d"/>
+        <Type name="Cu_2008" class="Cu" element="Cu" mass="63.5463" def="Cu" desc="FCC copper" doi="10.1021/jp801931d"/>
+        <Type name="Ni_2008" class="Ni" element="Ni" mass="58.69342" def="Ni" desc="FCC nickel" doi="10.1021/jp801931d"/>
+        <Type name="Pb_2008" class="Pb" element="Pb" mass="207.21" def="Pb" desc="FCC lead" doi="10.1021/jp801931d"/>
+        <Type name="Pd_2008" class="Pd" element="Pd" mass="106.421" def="Pd" desc="FCC palladium" doi="10.1021/jp801931d"/>
+        <Type name="Pt_2008" class="Pt" element="Pt" mass="195.0849" def="Pt" desc="FCC platinum" doi="10.1021/jp801931d"/>
         <Type name="Ac_2021" class="Ac" element="Ac" mass="227" def="Ac" desc="FCC actinium" doi="10.1038/s41524-020-00478-1"/>
         <Type name="Ca_2021" class="Ca" element="Ca" mass="40.078" def="Ca" desc="FCC calcium" doi="10.1038/s41524-020-00478-1"/>
         <Type name="Ce_2021" class="Ce" element="Ce" mass="132.90545" def="Ce" desc="FCC cesium" doi="10.1038/s41524-020-00478-1"/>
@@ -16,6 +25,14 @@
         <Type name="Yb_2021" class="Yb" element="Yb" mass="173.04" def="Yb" desc="FCC ytterbium" doi="10.1038/s41524-020-00478-1"/>
     </AtomTypes>
     <NonbondedForce coulomb14scale="0.0" lj14scale="0.0">
+        <Atom type="Ag_2008" charge="0" sigma="0.26326057121047026" epsilon="19.07904"/>
+        <Atom type="Al_2008" charge="0" sigma="0.26058787505604925" epsilon="16.81968"/>
+        <Atom type="Au_2008" charge="0" sigma="0.2629042117232141" epsilon="22.13336"/>
+        <Atom type="Cu_2008" charge="0" sigma="0.23305910466551275" epsilon="19.74848"/>
+        <Atom type="Ni_2008" charge="0" sigma="0.22735735286941458" epsilon="23.6396"/>
+        <Atom type="Pb_2008" charge="0" sigma="0.31760539301703095" epsilon="12.25912"/>
+        <Atom type="Pd_2008" charge="0" sigma="0.2511443486437616" epsilon="25.7316"/>
+        <Atom type="Pt_2008" charge="0" sigma="0.2534606853109265" epsilon="32.6352"/>
         <Atom type="Ac_2021" charge="0" sigma="0.34237237738133236" epsilon="27.23784"/>
         <Atom type="Ca_2021" charge="0" sigma="0.35858673405148656" epsilon="14.05824"/>
         <Atom type="Ce_2021" charge="0" sigma="0.3326615813536027" epsilon="26.69392"/>
@@ -28,4 +45,3 @@
         <Atom type="Yb_2021" charge="0" sigma="0.35119227469092174" epsilon="11.33864"/>
     </NonbondedForce>
 </ForceField>
-
