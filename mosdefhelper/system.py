@@ -77,16 +77,20 @@ class System(object):
 
     @property
     def compound_names(self):
-        return [_c.name for _c in self._compounds]
+        return [_c.compound.name for _c in self._compounds]
 
     @property
     def n_compounds(self):
         return [_c.n for _c in self._compounds]
 
-    def to_parmed(self):
+    def to_parmed(self, shift_positions=None):
         """Creates a ParmEd structure from the information in the system."""
         # fill box
         system = mb.fill_box(compound=self.compounds, n_compounds=self.n_compounds, box=self.box)
+
+        # shift positions if specified
+        if shift_positions is not None:
+            system.xyz += np.array(shift_positions)
 
         # separate molecules into different compounds and apply force fields
         child_iter = iter(system.children)
