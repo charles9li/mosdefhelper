@@ -46,20 +46,20 @@ class Hematite0001Surface(mb.Compound):
         # shift atom positions into new box
         fe2o3_lattice.xyz -= new_box.lengths * np.round_(fe2o3_lattice.xyz / new_box.lengths - 0.5)
 
-        # compute square pair distances
-        xyz = fe2o3_lattice.xyz
-        rij = xyz - xyz[:, None, :]
-        # lengths = np.array(new_box.lengths)
-        # rij = rij - np.array([1, 1, 0]) * lengths * np.round(rij / lengths)
-        rij_sqd = np.sum(rij**2, axis=2)
-
-        # determine which pairs are within 3 angstrom cutoff
-        rij_sqd[np.tril_indices_from(rij_sqd)] = np.inf # fill lower triangle of square dist matrix with inf to prevent double counting pairs
-        pairs = np.transpose(np.where(rij_sqd < .3**2))
-
-        # add bonds for all pairs within cutoff
-        for p in pairs:
-            fe2o3_lattice.add_bond((fe2o3_lattice[f"Compound[{p[0]}]"], fe2o3_lattice[f"Compound[{p[1]}]"]))
+        # # compute square pair distances
+        # xyz = fe2o3_lattice.xyz
+        # rij = xyz - xyz[:, None, :]
+        # # lengths = np.array(new_box.lengths)
+        # # rij = rij - np.array([1, 1, 0]) * lengths * np.round(rij / lengths)
+        # rij_sqd = np.sum(rij**2, axis=2)
+        #
+        # # determine which pairs are within 3 angstrom cutoff
+        # rij_sqd[np.tril_indices_from(rij_sqd)] = np.inf # fill lower triangle of square dist matrix with inf to prevent double counting pairs
+        # pairs = np.transpose(np.where(rij_sqd < .3**2))
+        #
+        # # add bonds for all pairs within cutoff
+        # for p in pairs:
+        #     fe2o3_lattice.add_bond((fe2o3_lattice[f"Compound[{p[0]}]"], fe2o3_lattice[f"Compound[{p[1]}]"]))
 
         # add lattice
         self.add(fe2o3_lattice)
