@@ -20,8 +20,10 @@ class TestSystem(unittest.TestCase):
         forcefield = foyerhelper.Forcefield(name='trappe-ua-acrylates')
         system.add_compound(PolyAlkylAcrylateUA("5*A4"), n=2,
                             forcefield=forcefield, apply_kwargs={'residues': "A4"})
+        dodecane = DodecaneUA()
+        dodecane.name = "DOD"
         system.add_compound(DodecaneUA(), n=2,
-                            forcefield=forcefield, apply_kwargs={'residues': "DodecaneUA"})
+                            forcefield=forcefield, apply_kwargs={'residues': "DOD"})
 
         # convert to parmed and save
         print("converting to parmed")

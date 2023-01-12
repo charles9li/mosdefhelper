@@ -43,7 +43,7 @@ class TestHematite0001Surface(unittest.TestCase):
         interface.save("hematite-dodecane.top", overwrite=True)
         interface.save("hematite-dodecane.gro", overwrite=True)
 
-    def test_5A4_iron_oxide_interface(self):
+    def test_10A4_iron_oxide_interface(self):
         # make 5nm x 5nm x 2nm hematite slab
         hematite_surface = Hematite0001Surface(lengths=[5, 5, 2])
 
@@ -52,18 +52,18 @@ class TestHematite0001Surface(unittest.TestCase):
             warnings.simplefilter("ignore")
             lengths = (hematite_surface.box.Lx, hematite_surface.box.Ly, 5)
             butyl_acrylate = mb.Box(lengths=lengths)
-            butyl_acrylate = mb.fill_box(PolyAlkylAcrylateUA("5*A4"), n_compounds=1, box=butyl_acrylate)
+            butyl_acrylate = mb.fill_box(PolyAlkylAcrylateUA("10*A4"), n_compounds=1, box=butyl_acrylate)
             butyl_acrylate.xyz += np.array([0, 0, hematite_surface.box.Lz])
 
         # apply force fields
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            hematite_forcefield = foyerhelper.Forcefield(forcefield_files="iron-oxide.xml")
+            hematite_forcefield = foyerhelper.Forcefield(name="iron-oxide")
             hematite_surface = hematite_forcefield.apply(hematite_surface,
                                                          assert_angle_params=False,
                                                          assert_dihedral_params=False,
                                                          set_masses_to_zero=True)
-            trappeua = foyerhelper.Forcefield(forcefield_files="trappe-ua-acrylates.xml")
+            trappeua = foyerhelper.Forcefield(name="trappe-ua-acrylates")
             butyl_acrylate = trappeua.apply(butyl_acrylate)
 
         # add boxes
@@ -71,8 +71,8 @@ class TestHematite0001Surface(unittest.TestCase):
         interface.box = hematite_surface.box + np.array([0, 0, butyl_acrylate.box[2], 0, 0, 0])
 
         # save to files
-        interface.save("hematite-5A4.gro", overwrite=True)
-        interface.save("hematite-5A4.top", overwrite=True)
+        interface.save("hematite-10A4.gro", overwrite=True)
+        interface.save("hematite-10A4.top", overwrite=True)
 
 
 if __name__ == '__main__':
