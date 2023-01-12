@@ -14,6 +14,28 @@ import foyerhelper
 
 class TestHematite0001Surface(unittest.TestCase):
 
+    def test_bonded(self):
+        # make 4nm x 4nm x 1nm hematite slab
+        hematite = Hematite0001Surface(lengths=[4, 4, 1])
+        hematite.name = "HEM"
+
+        # make Lz long
+        lengths = list(hematite.box.lengths)
+        lengths[2] += 5
+        hematite.box = mb.Box(lengths=lengths)
+
+        # apply force field
+        iron_oxide = foyerhelper.Forcefield(name="iron-oxide")
+        hematite_pmd = iron_oxide.apply(hematite,
+                                        assert_angle_params=False,
+                                        assert_dihedral_params=False,
+                                        residues="HEM")
+
+        # save to files
+        hematite_pmd.save("hematite.pdb", overwrite=True)
+        hematite_pmd.save("hematite.gro", overwrite=True)
+        hematite_pmd.save("hematite.top", overwrite=True)
+
     def test_dodecane_hematite_interface(self):
         # make 4nm x 4nm x 1nm hematite slab
         hematite_surface = Hematite0001Surface(lengths=[4, 4, 1])
