@@ -9,7 +9,7 @@ from mbuild.lattice import load_cif
 
 class Hematite0001Surface(mb.Compound):
 
-    def __init__(self, n_tiles=None, lengths=None, **kwargs):
+    def __init__(self, n_tiles=None, lengths=None, add_linear_bonds=False, **kwargs):
         super(Hematite0001Surface, self).__init__(**kwargs)
 
         # load in data from cif file
@@ -46,20 +46,24 @@ class Hematite0001Surface(mb.Compound):
         # shift atom positions into new box
         fe2o3_lattice.xyz -= new_box.lengths * np.round_(fe2o3_lattice.xyz / new_box.lengths - 0.5)
 
-        # compute square pair distances
-        xyz = fe2o3_lattice.xyz
-        rij = xyz - xyz[:, None, :]
-        lengths = np.array(new_box.lengths)
-        rij = rij - np.array([1, 1, 0]) * lengths * np.round(rij / lengths)
-        rij_sqd = np.sum(rij**2, axis=2)
+        if add_linear_bonds:
+            for i in range(fe2o3_lattice.n_particles - 1):
+                fe2o3_lattice.add_bond((fe2o3_lattice[f"Compound[{i}]"], fe2o3_lattice[f"Compound[{i+1}]"]))
+        else:
+            # compute square pair distances
+            xyz = fe2o3_lattice.xyz
+            rij = xyz - xyz[:, None, :]
+            lengths = np.array(new_box.lengths)
+            rij = rij - np.array([1, 1, 0]) * lengths * np.round(rij / lengths)
+            rij_sqd = np.sum(rij**2, axis=2)
 
-        # determine which pairs are within 3 angstrom cutoff
-        rij_sqd[np.tril_indices_from(rij_sqd)] = np.inf # fill lower triangle of square dist matrix with inf to prevent double counting pairs
-        pairs = np.transpose(np.where(rij_sqd < .3**2))
+            # determine which pairs are within 3 angstrom cutoff
+            rij_sqd[np.tril_indices_from(rij_sqd)] = np.inf # fill lower triangle of square dist matrix with inf to prevent double counting pairs
+            pairs = np.transpose(np.where(rij_sqd < .3**2))
 
-        # add bonds for all pairs within cutoff
-        for p in pairs:
-            fe2o3_lattice.add_bond((fe2o3_lattice[f"Compound[{p[0]}]"], fe2o3_lattice[f"Compound[{p[1]}]"]))
+            # add bonds for all pairs within cutoff
+            for p in pairs:
+                fe2o3_lattice.add_bond((fe2o3_lattice[f"Compound[{p[0]}]"], fe2o3_lattice[f"Compound[{p[1]}]"]))
 
         # add lattice
         self.add(fe2o3_lattice)
