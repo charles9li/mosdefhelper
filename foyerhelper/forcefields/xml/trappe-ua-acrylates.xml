@@ -55,6 +55,7 @@
         <Angle class1="C_carbonyl" class2="Csp2" class3="Csp3" angle="2.0891591146372126" k="585.504457560"/>
         <Angle class1="Csp3" class2="Csp2" class3="Csp3" angle="2.0891591146372126" k="585.504457560"/>
         <Angle class1="Csp3" class2="Csp2" class3="Csp2" angle="2.0891591146372126" k="585.504457560"/>
+        <Angle class1="Csp2" class2="Csp2" class3="Csp2" angle="2.0891591146372126" k="585.504457560"/>
         <!-- CHx-[O(ether)]-C(carbonyl) -->
         <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" -->
         <Angle class1="Csp3" class2="O_ether" class3="C_carbonyl" angle="2.007128639793479" k="519.653913625"/>
@@ -80,6 +81,9 @@
         <!-- O(ether)-[C(carbonyl)]-C(sp3) -->
         <!--    Kamath et. al., 2006, doi="10.1016/j.fluid.2005.11.034" -->
         <Angle class1="O_ether" class2="C_carbonyl" class3="Csp3" angle="1.9373154697137058" k="587.0010608308"/>
+        <!-- O(ether)-[C(carbonyl)]-C(sp2) -->
+        <!--    Extrapolated from the O(ether)-[C(carbonyl)]-C(sp3) angle -->
+        <Angle class1="O_ether" class2="C_carbonyl" class3="Csp2" angle="1.9373154697137058" k="587.0010608308"/>
     </HarmonicAngleForce>
     <RBTorsionForce>
         <!-- CHx-[CH2]-[CH2]-CHy -->
@@ -108,7 +112,7 @@
         <Proper type1="CH2_sp2" class2="Csp2" class3="C_carbonyl" class4="O_carbonyl" c0="13.271212652346879" c1="0.34870856219892" c2="-12.85632096770868" c3="0.06618312243928" c4="0" c5="0"/>
         <!-- CH2=[CHx(sp2)]-[C(carbonyl)]-O(ether) -->
         <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" (torsion #4) -->
-        <Proper type1="CH2_sp2" class2="Csp2" class3="C(carbonyl)" class4="O_ether" c0="13.271212652346879" c1="-0.34870856219892" c2="-12.85632096770868" c3="-0.06618312243928" c4="0" c5="0"/>
+        <Proper type1="CH2_sp2" class2="Csp2" class3="C_carbonyl" class4="O_ether" c0="13.271212652346879" c1="-0.34870856219892" c2="-12.85632096770868" c3="-0.06618312243928" c4="0" c5="0"/>
         <!-- O(carbonyl)=[C(carbonyl)]-[C(sp2)]-CH3 -->
         <!--    Maerzke et al., 2009, doi="10.1021/jp810558v" (torsion #5)-->
         <Proper class1="O_carbonyl" class2="C_carbonyl" class3="Csp2" type4="CH3_sp3" c0="0.49271505474267996" c1="1.8429837839058802" c2="0.8410910384368802"	c3="-0.8021793533846401" c4="1.8923716918567999" c5="0"/>

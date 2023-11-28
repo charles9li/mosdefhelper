@@ -8,6 +8,12 @@ import foyerhelper
 
 class TestTraPPEUAAcrylates(unittest.TestCase):
 
+    def test_butyl_acrylate_monomer(self):
+        ba = PolyAlkylAcrylateUA("1*A4")
+        forcefield = foyerhelper.Forcefield(name="trappe-ua-acrylates")
+        ba = forcefield.apply(ba, infer_residues=True, assert_angle_params=True, assert_dihedral_params=True)
+        self.assertListEqual([0.0, 0.0, 0.4, -0.4, -0.25, 0.25, 0.0, 0.0, 0.0], [a.charge for a in ba.atoms])
+
     def test_butyl_acrylate_3mer(self):
         pba_3mer = PolyAlkylAcrylateUA("3*A4")
         forcefield = foyerhelper.Forcefield(name="trappe-ua-acrylates")
@@ -19,6 +25,12 @@ class TestTraPPEUAAcrylates(unittest.TestCase):
         forcefield = foyerhelper.Forcefield(name="trappe-ua-acrylates")
         pba_5mer = forcefield.apply(pba_5mer, infer_residues=True)
         self.assertListEqual([0.0, 0.0, 0.4, -0.4, -0.25, 0.25, 0.0, 0.0, 0.0]*5, [a.charge for a in pba_5mer.atoms])
+
+    def test_dodecyl_acrylate_monomer(self):
+        dda = PolyAlkylAcrylateUA("1*A12")
+        forcefield = foyerhelper.Forcefield(name="trappe-ua-acrylates")
+        dda = forcefield.apply(dda, infer_residues=True, assert_angle_params=True, assert_dihedral_params=True)
+        self.assertListEqual([0.0, 0.0, 0.4, -0.4, -0.25, 0.25] + [0.0]*11, [a.charge for a in dda.atoms])
 
     def test_methyl_methacrylate_3mer(self):
         pmma_3mer = PolyAlkylAcrylateUA("3*mA1")

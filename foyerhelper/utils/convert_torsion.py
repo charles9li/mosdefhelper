@@ -355,3 +355,13 @@ def convert_torsion(coefficients, input_form, output_form, input_units=None, out
         coefficients = convert_units(coefficients, input_units, output_units)
 
     return coefficients
+
+
+if __name__ == '__main__':
+    print(convert_torsion([0.0, 355.03, -68.19, 791.32], 'opls', 'rb'))
+    print(convert_torsion([-251.06, 428.73, -111.85, 441.27], 'opls', 'rb'))
+    print(convert_torsion([1820.74, -414.41, -1373.14, -30.19, 0.0], 'cosine', 'rb'))
+    print(convert_torsion([2029.99, -751.83, -538.95, -22.10, -51.27], 'cosine', 'rb'))
+    print(convert_torsion([893.21, 176.62, 53.34, 769.93, 0.0], 'cosine', 'rb'))
+    print(convert_torsion([2035.58, -736.9, 57.84, -293.23], 'opls', 'rb'))
+    print(convert_torsion([0.0, 2158.0, 2098.0, 197.3], 'opls', 'rb'))
