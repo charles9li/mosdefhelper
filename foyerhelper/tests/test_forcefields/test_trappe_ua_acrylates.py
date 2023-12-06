@@ -1,7 +1,5 @@
 import unittest
 
-import mbuild as mb
-
 from mbuildhelper.lib.recipes import PolyAlkylAcrylateUA
 import foyerhelper
 
