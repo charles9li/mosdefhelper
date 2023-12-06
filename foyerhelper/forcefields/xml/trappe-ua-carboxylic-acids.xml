@@ -1,0 +1,75 @@
+<ForceField name="Trappe-UA-carboxylic-acids" version="0.0.0" combining_rule="lorentz">
+    <AtomTypes>
+        <Type name="C_carbonyl" class="C_carbonyl" element="C" mass="12.011" def="[C;X3]([_CH2,_CH3])(O)O" desc="Carbonyl carbon" doi="10.1021/jp0625053"/>
+        <Type name="O_carbonyl" class="O_carbonyl" element="O" mass="15.99948" def="[O;X1][C;X3]" desc="Carbonyl oxygen" doi="10.1021/jp0625053"/>
+        <Type name="O_alcohol" class="O_alcohol" element="O" mass="15.99948" def="[O;X2]([C;X3])H" desc="Alcohol oxygen" doi="10.1021/jp0625053"/>
+        <Type name="H_alcohol" class="H_alcohol" element="H" mass="1.008" def="[H;X1][O;X2]" desc="Alcohol hydrogen" doi="10.1021/jp0625053"/>
+        <Type name="CH3_C" class="Csp3" element="_CH3" mass="15.035" def="[_CH3;X1][C;X3]" desc="CH3 bonded to carbonyl carbon" doi="10.1021/jp0625053"/>
+        <Type name="CH2_C" class="Csp3" element="_CH2" mass="14.027" def="[_CH2;X2]([C;X3])[_CH2,_CH3]" desc="CH2 bonded to carbonyl carbon" doi="10.1021/jp0625053"/>
+        <Type name="CH3" class="Csp3" element="_CH3" mass="15.035" def="[_CH3;X1]_CH2" desc="Alkane CH3, united atom" doi="10.1021/jp0625053"/>
+        <Type name="CH2" class="Csp3" element="_CH2" mass="14.027" def="[_CH2;X2]([_CH2,_CH3])_CH2" desc="Alkane CH2, united atom" doi="10.1021/jp0625053"/>
+    </AtomTypes>
+    <HarmonicBondForce>
+        <!-- CHx-CHy -->
+        <!--    Martin and Siepmann, 1998, doi="10.1021/jp984742e" -->
+        <Bond class1="Csp3" class2="Csp3" length="0.1540" k="502416.0" />
+        <!-- C=O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Bond class1="C_carbonyl" class2="O_carbonyl" length="0.1214" k="502416.0"/>
+        <!-- C-O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Bond class1="C_carbonyl" class2="O_alcohol" length="0.1364" k="502416.0"/>
+        <!-- C-CHx -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Bond class1="C_carbonyl" class2="Csp3" length="0.1520" k="502416.0"/>
+        <!-- O-H -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Bond class1="O_alcohol" class2="H_alcohol" length="0.0970" k="502416.0"/>
+    </HarmonicBondForce>
+    <HarmonicAngleForce>
+        <!-- CHx-[CH2]-CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Angle class1="Csp3" type2="CH2" class3="Csp3" angle="1.9896753472735356" k="519.653913625"/>
+        <Angle class1="Csp3" type2="CH2_C" class3="C_carbonyl" angle="1.9896753472735356" k="519.653913625"/>
+        <!-- C-[O]-H -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Angle class1="C_carbonyl" type2="O_alcohol" class3="H_alcohol" angle="1.8675022996339325" k="146.3345420768"/>
+        <!-- O=[C]-O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Angle type1="O_carbonyl" type2="C_carbonyl" type3="O_alcohol" angle="2.1467549799530254" k="335.0728435054"/>
+        <!-- CHx-[C]-O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Angle class1="Csp3" class2="C_carbonyl" class3="O_alcohol" angle="1.9373154697137058" k="293.5005304154"/>
+        <!-- CHx-[C]=O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Angle class1="Csp3" class2="C_carbonyl" class3="O_carbonyl" angle="2.199114857512855" k="335.0728435054"/>
+    </HarmonicAngleForce>
+    <RBTorsionForce>
+        <!-- O=[C]-[O]-H -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Proper class1="O_carbonyl" type2="C_carbonyl" type3="O_alcohol" class4="H_alcohol" c0="18.22862784" c1="5.23811145" c2="-12.99051639" c3="0" c4="0" c5="0"/>
+        <!-- CHx-[C]-[O]-H -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Proper class1="Csp3" type2="C_carbonyl" type3="O_alcohol" class4="H_alcohol" c0="18.22862784" c1="-5.23811145" c2="-12.99051639" c3="0" c4="0" c5="0"/>
+        <!-- CHx-[CH2]-[C]=O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Proper class1="Csp3" type2="CH2_C" type3="C_carbonyl" class4="O_carbonyl" c0="18.22862784" c1="5.23811145" c2="-12.99051639" c3="0" c4="0" c5="0"/>
+        <!-- CHx-[CH2]-[C]-O -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Proper class1="Csp3" type2="CH2_C" type3="C_carbonyl" class4="O_alcohol" c0="8.231068558" c1="16.95260727"	c2="1.133926412" c3="-26.31760224" c4="0" c5="0"/>
+        <!-- CHx-[CH2]-[CH2]-CHy -->
+        <!--    Clifford et al., 2006, doi="10.1021/jp0625053" -->
+        <Proper class1="Csp3" type2="CH2" type3="CH2" class4="Csp3" c0="8.231068558" c1="16.95260727"	c2="1.133926412" c3="-26.31760224" c4="0" c5="0"/>
+        <Proper class1="Csp3" type2="CH2" type3="CH2_C" class4="C_carbonyl" c0="8.231068558" c1="16.95260727"	c2="1.133926412" c3="-26.31760224" c4="0" c5="0"/>
+    </RBTorsionForce>
+    <NonbondedForce coulomb14scale="0" lj14scale="0">
+        <Atom type="C_carbonyl" charge="0.42" sigma="0.390" epsilon="0.340892967338"/>
+        <Atom type="O_carbonyl" charge="-0.45" sigma="0.305" epsilon="0.656842546822"/>
+        <Atom type="O_alcohol" charge="-0.46" sigma="0.302" epsilon="0.773245023474"/>
+        <Atom type="H_alcohol" charge="0.37" sigma="0.0" epsilon="0.0"/>
+        <Atom type="CH3_C" charge="0.12" sigma="0.375" epsilon="0.814817336564"/>
+        <Atom type="CH2_C" charge="0.12" sigma="0.395" epsilon="0.382465280428"/>
+        <Atom type="CH3" charge="0.0" sigma="0.375" epsilon="0.814817336564"/>
+        <Atom type="CH2" charge="0.0" sigma="0.395" epsilon="0.382465280428"/>
+    </NonbondedForce>
+</ForceField>
