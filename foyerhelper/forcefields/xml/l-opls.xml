@@ -1,0 +1,79 @@
+<ForceField name="L-OPLS" version="0.0.0" combining_rule="geometric">
+    <AtomTypes>
+        <Type name="C_carbonyl" class="C_carbonyl" element="C" mass="12.011" def="[C;X3]([H,C])(O)O" desc="Carbonyl carbon" doi="10.1021/ja9621760"/>
+        <Type name="O_carbonyl" class="O_carbonyl" element="O" mass="15.9994" def="[O;X1][C;X3]" desc="Carbonyl oxygen" doi="10.1021/ja9621760"/>
+        <Type name="O_alcohol" class="O_alcohol" element="O" mass="15.9994" def="[O;X2]([C;X3])H" desc="Alcohol oxygen" doi="10.1021/ja9621760"/>
+        <Type name="H_alcohol" class="H_alcohol" element="H" mass="1.008" def="H[O;X2]" desc="Alcohol hydrogen" doi="10.1021/ja9621760"/>
+        <Type name="CT_CH2" class="CT" element="C" mass="12.011" def="[C;X4](H)(H)(*)(*)" desc="Carbon in methylene bridge" doi="10.1021/ct200908r"/>
+        <Type name="CT_CH3" class="CT" element="C" mass="12.011" def="[C;X4](H)(H)(H)(*)" overrides="CT_CH2" desc="Carbon in terminal methyl group" doi="10.1021/ct200908r"/>
+        <Type name="HC_CH2" class="HC" element="H" mass="1.008" def="H[C;X4]" desc="Hydrogen bonded to methylene bridge" doi="10.1021/ct200908r"/>
+        <Type name="HC_CH3" class="HC" element="H" mass="1.008" def="H[C;%CT_CH3]" overrides="HC_CH2" desc="Hydrogen bonded to terminal methyl carbon" doi="10.1021/ct200908r"/>
+    </AtomTypes>
+    <HarmonicBondForce>
+        <!-- C-O (#0) -->
+        <Bond type1="C_carbonyl" type2="O_alcohol" length="0.1364" k="376560.0"/>
+        <!-- H-O (#1) -->
+        <Bond type1="H_alcohol" type2="O_alcohol" length="0.0945" k="462750.4"/>
+        <!-- O=C (#2) -->
+        <Bond type1="O_carbonyl" type2="C_carbonyl" length="0.1229" k="476976.0"/>
+        <!-- CT-C (#3) -->
+        <Bond class1="CT" type2="C_carbonyl" length="0.1522" k="265265.6"/>
+        <!-- CT-CT (#4) -->
+        <Bond class1="CT" class2="CT" length="0.1529" k="224262.4"/>
+        <!-- HC-CT (#5) -->
+        <Bond class1="HC" class2="CT" length="0.1090" k="284512.0"/>
+    </HarmonicBondForce>
+    <HarmonicAngleForce>
+        <!-- O-[C]=O (#0) -->
+        <Angle type1="O_alcohol" type2="C_carbonyl" type3="O_carbonyl" angle="2.11184839491" k="669.44"/>
+        <!-- O-[C]-CT (#1) -->
+        <Angle type1="O_alcohol" type2="C_carbonyl" class3="CT" angle="1.88495559215" k="585.76"/>
+        <!-- C-[O]-H (#2) -->
+        <Angle type1="C_carbonyl" type2="O_alcohol" type3="H_alcohol" angle="1.97222205475" k="292.88"/>
+        <!-- C-[CT]-CT (#3) -->
+        <Angle type1="C_carbonyl" class2="CT" class3="CT" angle="1.93906079897" k="527.184"/>
+        <!-- C-[CT]-HC (#4) -->
+        <Angle type1="C_carbonyl" class2="CT" class3="HC" angle="1.91113553093" k="292.88"/>
+        <!-- O=[C]-CT (#5) -->
+        <Angle type1="O_carbonyl" type2="C_carbonyl" class3="CT" angle="2.1013764194" k="669.44"/>
+        <!-- CT-[CT]-CT (#6) -->
+        <Angle class1="CT" class2="CT" class3="CT" angle="1.966986067" k="488.273"/>
+        <!-- CT-[CT]-HC (#7) -->
+        <Angle class1="CT" class2="CT" class3="HC" angle="1.93207948196" k="313.8"/>
+        <!-- HC-[CT]-HC (#8) -->
+        <Angle class1="HC" class2="CT" class3="HC" angle="1.88146493365" k="276.144"/>
+    </HarmonicAngleForce>
+    <RBTorsionForce>
+        <!-- O-[C]-[CT]-CT (#0) -->
+        <Proper type1="O_alcohol" type2="C_carbonyl" class3="CT" class4="CT" c0="5.31786" c1="0.7322" c2="-2.28446" c3="-3.7656" c4="0" c5="0"/>
+        <!-- O-[C]-[CT]-HC and O=[C]-[CT]-HC (#1) -->
+        <Proper type1="O_alcohol" type2="C_carbonyl" class3="CT" class4="HC" c0="0" c1="0" c2="0" c3="0" c4="0" c5="0"/>
+        <Proper type1="O_carbonyl" type2="C_carbonyl" class3="CT" class4="HC" c0="0" c1="0" c2="0" c3="0" c4="0" c5="0"/>
+        <!-- C-[CT]-[CT]-CT (#2) -->
+        <Proper type1="C_carbonyl" class2="CT" class3="CT" class4="CT" c0="-4.96013" c1="6.28646" c2="1.30959" c3="-2.63592" c4="0" c5="0"/>
+        <!-- C-[CT]-[CT]-HC (#3) -->
+        <Proper type1="C_carbonyl" class2="CT" class3="CT" class4="HC" c0="-0.2092" c1="-0.6276" c2="0" c3="0.8368" c4="0" c5="0"/>
+        <!-- O=[C]-[O]-H (#4) -->
+        <Proper type1="O_carbonyl" type2="C_carbonyl" type3="O_alcohol" type4="H_alcohol" c0="23.012" c1="0" c2="-23.012" c3="0" c4="0" c5="0"/>
+        <!-- O=[C]-[CT]-CT (#5) -->
+        <Proper type1="O_carbonyl" type2="C_carbonyl" class3="CT" class4="CT" c0="2.28446" c1="0" c2="-2.28446" c3="0" c4="0" c5="0"/>
+        <!-- CT-[C]-[O]-H (#6) -->
+        <Proper class1="CT" type2="C_carbonyl" type3="O_alcohol" type4="H_alcohol" c0="26.15" c1="-3.138" c2="-23.012" c3="0" c4="0" c5="0"/>
+        <!-- CT-[CT]-[CT]-HC and HC-[CT]-[CT]-HC (#8) -->
+        <Proper class1="CT" class2="CT" class3="CT" class4="HC" c0="0.6276" c1="1.8828" c2="0" c3="-2.5104" c4="0" c5="0"/>
+        <Proper class1="HC" class2="CT" class3="CT" class4="HC" c0="0.6276" c1="1.8828" c2="0" c3="-2.5104" c4="0" c5="0"/>
+        <!-- CT-[CT]-[CT]-CT -->
+        <!--    Siu et al., 2012, doi="10.1021/ct200908r" (torsion #1)-->
+        <Proper class1="CT" class2="CT" class3="CT" class4="CT" c0="0.518787" c1="-0.230192" c2="0.896807" c3="-1.49134" c4="0" c5="0"/>
+    </RBTorsionForce>
+    <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+        <Atom type="C_carbonyl" charge="0.52" sigma="0.375" epsilon="0.43932"/>
+        <Atom type="O_carbonyl" charge="-0.44" sigma="0.296" epsilon="0.87864"/>
+        <Atom type="O_alcohol" charge="-0.53" sigma="0.3" epsilon="0.71128"/>
+        <Atom type="H_alcohol" charge="0.45" sigma="1.0" epsilon="0.0"/>
+        <Atom type="CT_CH2" charge="-0.148" sigma="0.35" epsilon="0.276144"/>
+        <Atom type="CT_CH3" charge="-0.222" sigma="0.35" epsilon="0.276144"/>
+        <Atom type="HC_CH2" charge="0.074" sigma="0.25" epsilon="0.11"/>
+        <Atom type="HC_CH3" charge="0.074" sigma="0.25" epsilon="0.12552"/>
+    </NonbondedForce>
+</ForceField>
