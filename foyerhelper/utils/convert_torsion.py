@@ -303,7 +303,7 @@ def convert_torsion(coefficients, input_form, output_form, input_units=None, out
             power torsion form, consists of linear combination of cosine powers
         'rb'
             Ryckaert-Bellemans torsion form
-    input_units, output_units : bool, optional
+    input_units, output_units : str, optional
         Current and desired units of `x`, respectively. One of the following
         string values.
 
@@ -322,8 +322,8 @@ def convert_torsion(coefficients, input_form, output_form, input_units=None, out
     Raises
     ------
     ValueError
-        If from_form or to_form aren't valid torsion forms or if a conversion
-        strategy can't be found for from_form to to_form.
+        If `input_form` or `output_form` aren't valid torsion forms or if a conversion
+        strategy can't be found for `input_form` to t`output_form.`
     """
     # set to lowercase
     input_form = input_form.lower()
@@ -358,10 +358,13 @@ def convert_torsion(coefficients, input_form, output_form, input_units=None, out
 
 
 if __name__ == '__main__':
-    print(convert_torsion([0.0, 355.03, -68.19, 791.32], 'opls', 'rb'))
-    print(convert_torsion([-251.06, 428.73, -111.85, 441.27], 'opls', 'rb'))
-    print(convert_torsion([1820.74, -414.41, -1373.14, -30.19, 0.0], 'cosine', 'rb'))
-    print(convert_torsion([2029.99, -751.83, -538.95, -22.10, -51.27], 'cosine', 'rb'))
-    print(convert_torsion([893.21, 176.62, 53.34, 769.93, 0.0], 'cosine', 'rb'))
-    print(convert_torsion([2035.58, -736.9, 57.84, -293.23], 'opls', 'rb'))
-    print(convert_torsion([0.0, 2158.0, 2098.0, 197.3], 'opls', 'rb'))
+    # print(convert_torsion([0.0, 355.03, -68.19, 791.32], 'opls', 'rb'))
+    # print(convert_torsion([-251.06, 428.73, -111.85, 441.27], 'opls', 'rb'))
+    # print(convert_torsion([1820.74, -414.41, -1373.14, -30.19, 0.0], 'cosine', 'rb'))
+    # print(convert_torsion([2029.99, -751.83, -538.95, -22.10, -51.27], 'cosine', 'rb'))
+    # print(convert_torsion([893.21, 176.62, 53.34, 769.93, 0.0], 'cosine', 'rb'))
+    # print(convert_torsion([2035.58, -736.9, 57.84, -293.23], 'opls', 'rb'))
+    # print(convert_torsion([0.0, 2158.0, 2098.0, 197.3], 'opls', 'rb'))
+    print(convert_torsion(np.array([0.0, 710.06, -136.38, 1582.64])/2, 'opls', 'rb', input_units='kb', output_units='kj/mol'))
+    print(convert_torsion([630.0+1562.4, -630.0, -1562.4], 'power', 'rb', input_units='kb', output_units='kj/mol'))
+    print(convert_torsion([630.0+1562.4, 630.0, -1562.4], 'power', 'rb', input_units='kb', output_units='kj/mol'))

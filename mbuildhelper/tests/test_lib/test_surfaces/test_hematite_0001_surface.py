@@ -2,17 +2,51 @@ import unittest
 
 import warnings
 
+import foyer
 import numpy as np
 
 import mbuild as mb
+from mbuild.lib.recipes import Alkane
 
 from mbuildhelper.lib.molecules import DodecaneUA
 from mbuildhelper.lib.recipes import PolyAlkylAcrylateUA
 from mbuildhelper.lib.surfaces import Hematite0001Surface
 import foyerhelper
+import mosdefhelper
 
 
 class TestHematite0001Surface(unittest.TestCase):
+
+    def test_dodecane_opls(self):
+        # make 4nm x 4nm x 1nm hematite slab
+        hematite = Hematite0001Surface(lengths=[4, 4, 1])
+        hematite.name = "HEM"
+
+        # create solution and add dodecane
+        box = mb.Box(lengths=[hematite.box.Lx, hematite.box.Ly, 5])
+        solution = mosdefhelper.System(box=box)
+        dodecane = Alkane(n=12)
+        dodecane.name = "DOD"
+        opls = foyer.Forcefield(name="oplsaa")
+        solution.add_compound(dodecane, forcefield=opls, n=2, apply_kwargs={'residues': "DOD"})
+
+        # convert solution to parmed
+        solution_pmd = solution.to_parmed(shift_positions=[0, 0, hematite.box.Lz])
+
+        # apply force field to iron oxide
+        berro = foyerhelper.Forcefield(name="iron-oxide")
+        hematite_pmd = berro.apply(hematite, assert_angle_params=False, assert_dihedral_params=False, residues="HEM")
+
+        # add boxes
+        system_pmd = solution_pmd + hematite_pmd
+        Lx = 10.0 * box.Lx
+        Ly = 10.0 * box.Ly
+        Lz = 10.0 * (box.Lz + hematite.box.Lz)
+        system_pmd.box = np.append(np.array([Lx, Ly, Lz]), np.array(box.angles))
+
+        # save to files
+        system_pmd.save("hematite-dodecane-opls.top", overwrite=True)
+        system_pmd.save("hematite-dodecane-opls.gro", overwrite=True)
 
     def test_bonded(self):
         # make 4nm x 4nm x 1nm hematite slab
