@@ -41,7 +41,7 @@ class Hematite0001SurfaceTiled(mb.Compound):
 
         # if lengths is specified, determine the number of tiles using the unit cell dimensions
         if lengths is not None:
-            _lattice_spacing = np.array(fe2o3_unit_cell.box.lengths) / 10.
+            _lattice_spacing = np.array(fe2o3_unit_cell.box.lengths)
             n_tiles = [int(_l / _lattice_spacing[i]) + 1 for i, _l in enumerate(lengths)]
 
         # tile rectilinear unit cell
@@ -78,5 +78,5 @@ class Hematite0001SurfaceTiled(mb.Compound):
 
 
 if __name__ == '__main__':
-    hematite = Hematite0001SurfaceTiled(lengths=[3, 3, 2], add_linear_bonds=True)
+    hematite = Hematite0001SurfaceTiled(lengths=[5, 5, 2], add_linear_bonds=True)
     hematite.save("hematite_0001_tiled.pdb", overwrite=True)
