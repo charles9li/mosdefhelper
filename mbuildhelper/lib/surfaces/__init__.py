@@ -1,2 +1,3 @@
 from mbuildhelper.lib.surfaces.iron_surface import IronSurface
 from mbuildhelper.lib.surfaces.hematite_0001_surface import Hematite0001Surface
+from mbuildhelper.lib.surfaces.hematite_0001_surface_tiled import Hematite0001SurfaceTiled
