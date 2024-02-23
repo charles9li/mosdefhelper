@@ -10,7 +10,7 @@ from mbuild.lib.recipes import Alkane
 
 from mbuildhelper.lib.molecules import DodecaneUA
 from mbuildhelper.lib.recipes import PolyAlkylAcrylateUA
-from mbuildhelper.lib.surfaces import Hematite0001Surface
+from mbuildhelper.lib.surfaces import Hematite0001Surface, Hematite0001SurfaceTiled
 import foyerhelper
 import mosdefhelper
 
@@ -129,6 +129,10 @@ class TestHematite0001Surface(unittest.TestCase):
         # save to files
         interface.save("hematite-10A4.gro", overwrite=True)
         interface.save("hematite-10A4.top", overwrite=True)
+
+    def test_hematite_tiled(self):
+        hematite = Hematite0001SurfaceTiled(lengths=[2, 2, 1])
+        hematite.save("hematite_tiled.pdb")
 
 
 if __name__ == '__main__':
