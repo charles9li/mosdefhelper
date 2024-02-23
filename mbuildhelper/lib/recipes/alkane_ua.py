@@ -2,8 +2,7 @@
 __all__ = ['AlkaneUA']
 
 import mbuild as mb
-from mbuildhelper.lib.atoms import CH2sp3UA, CH3UA
-from mbuildhelper.lib.molecules import MethaneUA, EthaneUA
+from mbuildhelper.lib.atoms import CH2sp3UA, CH3UA, CH4UA
 
 
 class AlkaneUA(mb.Compound):
@@ -18,7 +17,7 @@ class AlkaneUA(mb.Compound):
         if n < 3:
             if n == 1:
                 if cap_front and cap_end:
-                    self.add(MethaneUA(), "chain")
+                    self.add(CH4UA(), "chain")
                 elif cap_front != cap_end:
                     chain = CH3UA()
                     self.add(chain, "chain")
@@ -33,7 +32,13 @@ class AlkaneUA(mb.Compound):
                     self.add(chain["up"], "up", containment=False)
             elif n == 2:
                 if cap_front and cap_end:
-                    self.add(EthaneUA(), "chain")
+                    self.add(CH3UA(), "methyl_front")
+                    self.add(CH3UA(), "methyl_end")
+                    mb.force_overlap(
+                        move_this=self["methyl_front"],
+                        from_positions=self["methyl_front"]["up"],
+                        to_positions=self["methyl_end"]["up"]
+                    )
                 elif cap_front != cap_end:
                     chain = CH2sp3UA()
                     self.add(chain, "chain")

@@ -19,6 +19,13 @@ class TestAlkaneUA(unittest.TestCase):
         self.assertEqual("_CH3", ch3_cap_front[0].name)
         self.assertEqual(1, len(ch3_cap_front.all_ports()))
 
+    def test_ethane(self):
+        ethane = AlkaneUA(n=2)
+        self.assertEqual(2, ethane.n_particles)
+        self.assertEqual("_CH3", ethane[0].name)
+        self.assertEqual("_CH3", ethane[0].name)
+        self.assertEqual(0, len(ethane.all_ports()))
+
     def test_dodecane(self):
         dodecane = AlkaneUA(12)
         self.assertEqual("_CH3", dodecane[0].name)
