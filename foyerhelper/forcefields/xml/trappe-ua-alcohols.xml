@@ -1,0 +1,25 @@
+<ForceField name="Trappe-UA-alcohols" version="0.0.0" combining_rule="lorentz">
+    <AtomTypes>
+        <Type name="O_alcohol" class="O_alcohol" element="O" mass="15.99948" def="[O;X2](_CH3)H" desc="Alcohol oxygen" doi="10.1021/jp003882x"/>
+        <Type name="H_alcohol" class="H_alcohol" element="H" mass="1.008" def="[H;X1][O;X2]" desc="Alcohol hydrogen" doi="10.1021/jp003882x"/>
+        <Type name="CH3_OH" class="Csp3" element="_CH3" mass="15.035" def="[_CH3;X1][O;X2]" desc="CH3 bonded to OH group" doi="10.1021/jp003882x"/>
+    </AtomTypes>
+    <HarmonicBondForce>
+        <!-- CHx-OH -->
+        <!--    Chen et al., 2001, doi="10.1021/jp003882x" -->
+        <Bond class1="Csp3" class2="O_alcohol" length="0.1430" k="502416.0" />
+        <!-- O-H -->
+        <!--    Chen et al., 2001, doi="10.1021/jp003882x" -->
+        <Bond class1="O_alcohol" class2="H_alcohol" length="0.0945" k="502416.0"/>
+    </HarmonicBondForce>
+    <HarmonicAngleForce>
+        <!-- CHx-[O]-H -->
+        <!--    Chen et al., 2001, doi="10.1021/jp003882x" -->
+        <Angle class1="Csp3" type2="O_alcohol" class3="H_alcohol" angle="1.8936822384138474" k="460.6212290372"/>
+    </HarmonicAngleForce>
+    <NonbondedForce coulomb14scale="0" lj14scale="0">
+        <Atom type="O_alcohol" charge="-0.700" sigma="0.302" epsilon="0.773245023474"/>
+        <Atom type="H_alcohol" charge="0.435" sigma="0.0" epsilon="0.0"/>
+        <Atom type="CH3_OH" charge="0.265" sigma="0.375" epsilon="0.814817336564"/>
+    </NonbondedForce>
+</ForceField>
