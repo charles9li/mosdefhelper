@@ -1,0 +1,43 @@
+<ForceField name="Trappe-UA-alkylbenzene" version="0.0.0" combining_rule="lorentz">
+    <AtomTypes>
+        <Type name="CH_arom" class="Carom" element="_CH" mass="13.019" def="[_CH;X2;r6]" desc="aromatic CH" doi="10.1021/jp001044x"/>
+        <Type name="C_arom" class="Carom" element="_C" mass="12.011" def="[_C;X3;r6]" desc="aromatic C" doi="10.1021/jp001044x"/>
+        <Type name="CH" class="Csp3" element="_CH" mass="13.019" def="[_CH;X3]" desc="Alkane CH, united atom" doi="10.1021/jp001044x"/>
+        <Type name="CH2" class="Csp3" element="_CH2" mass="14.027" def="[_CH2;X2]" desc="Alkane CH2, united atom" doi="10.1021/jp001044x"/>
+        <Type name="CH3" class="Csp3" element="_CH3" mass="15.035" def="[_CH3;X1]" desc="Alkane CH3, united atom" doi="10.1021/jp001044x"/>
+    </AtomTypes>
+    <HarmonicBondForce>
+        <!-- CHx+CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Bond class1="Carom" class2="Carom" length="0.14" k="392459.2" />
+        <!-- CHx-CHy -->
+        <!--    Wick et al., 2000, doi="10.1021/jp001044x" -->
+        <Bond class1="Carom" class2="Csp3" length="0.154" k="265265.6" />
+        <Bond class1="Csp3" class2="Csp3" length="0.154" k="265265.6" />
+    </HarmonicBondForce>
+    <HarmonicAngleForce>
+        <!-- CHx+[CHy]+CHz -->
+        <!--    Yiannourakou et al., 2019, doi="10.1016/j.fluid.2018.07.001" -->
+        <Angle class1="Carom" class2="Carom" class3="Carom"
+               angle="2.0943951023931953" k="527.17850229429"/>
+        <!-- CHx+[CHy]-CHz -->
+        <!--    Yiannourakou et al., 2019, doi="10.1016/j.fluid.2018.07.001" -->
+        <Angle class1="Carom" class2="Carom" class3="Csp3"
+               angle="2.0943951023931953" k="585.7538914381"/>
+    </HarmonicAngleForce>
+    <PeriodicTorsionForce>
+        <!-- CHw+[CHx]+[CHy]+CHz -->
+        <!--    Yiannourakou et al., 2019, doi="10.1016/j.fluid.2018.07.001" -->
+        <Proper class1="Carom" class2="Carom" class3="Carom" class4="Carom"
+                periodicity1="2" phase1="3.14159265359" k1="15.16691012925088"/>
+        <Proper class1="Carom" class2="Carom" class3="Carom" class4="Csp3"
+                periodicity1="2" phase1="3.14159265359" k1="15.16691012925088"/>
+    </PeriodicTorsionForce>
+    <NonbondedForce coulomb14scale="0" lj14scale="0">
+        <Atom type="CH_arom" charge="0.0" sigma="0.3695" epsilon="0.419880362209"/>
+        <Atom type="C_arom" charge="0.0" sigma="0.388" epsilon="0.174603714978"/>
+        <Atom type="CH" charge="0.0" sigma="0.465" epsilon="0.08314462618"/>
+        <Atom type="CH2" charge="0.0" sigma="0.395" epsilon="0.382465280428"/>
+        <Atom type="CH3" charge="0.0" sigma="0.375" epsilon="0.814817336564"/>
+    </NonbondedForce>
+</ForceField>
