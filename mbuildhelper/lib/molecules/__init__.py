@@ -6,3 +6,4 @@ from mbuildhelper.lib.molecules.alkyl_acrylate_ua import *
 from mbuildhelper.lib.molecules.stearic_acid import StearicAcid
 from mbuildhelper.lib.molecules.stearic_acid_ua import StearicAcidUA
 from mbuildhelper.lib.molecules.methanol_ua import MethanolUA
+from mbuildhelper.lib.molecules.toluene_ua import TolueneUA7Site, TolueneUA10Site
